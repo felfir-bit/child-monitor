@@ -38,6 +38,6 @@ Group SE-2410, Astana IT University.
 
 **Excluded:** diagnosis and risk scoring, native mobile apps, integration with clinics or government systems, real children's data.
 
-**Status (pre-defense 1, 24 October 2026):** analysis and design documents, diagrams and the prototype are drafted. The backend core is implemented and tested: authentication, child profiles, access grants and specialist notes. The indicator, history, analytics and notification modules, the React client, containerization and monitoring are planned for later stages.
+**Status (pre-defense 1, 24 October 2026):** analysis and design documents, diagrams and the prototype are drafted.
 
 Full project proposal: [docs/01-project-proposal.md](docs/01-project-proposal.md)
