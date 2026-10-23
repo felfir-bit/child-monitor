@@ -1,0 +1,169 @@
+@startuml data-model
+title Data model (PostgreSQL 16): migrations 001_init and 002_monitoring
+
+skinparam defaultFontName Arial
+skinparam shadowing false
+hide circle
+skinparam linetype ortho
+skinparam class {
+  BackgroundColor #FFFFFF
+  BorderColor #4A5563
+}
+skinparam class<<reference>> {
+  BackgroundColor #EEF6EE
+  BorderColor #3F7F4F
+}
+
+package "Core (Zhan)" {
+  entity "users" as users {
+    * id : uuid <<PK>>
+    --
+    * email : text <<unique, lowercased>>
+    * full_name : text
+    * role : 'parent' | 'specialist'
+    * password_hash : text <<argon2id>>
+    consent_version : text
+    consented_at : timestamptz
+    * created_at : timestamptz
+  }
+
+  entity "children" as children {
+    * id : uuid <<PK>>
+    --
+    * owner_id : uuid <<FK users>>
+    * full_name : text
+    * birth_date : date <<under 6 years>>
+    sex : 'male' | 'female' <<required by the API>>
+    gestational_age_weeks : smallint <<22-44>>
+    * created_at, updated_at : timestamptz
+  }
+
+  entity "access_grants" as grants {
+    * id : uuid <<PK>>
+    --
+    * child_id : uuid <<FK children, cascade>>
+    * specialist_id : uuid <<FK users>>
+    * granted_at : timestamptz
+    revoked_at : timestamptz
+    --
+    unique (child_id, specialist_id)
+    where revoked_at is null
+  }
+
+  entity "specialist_notes" as notes {
+    * id : uuid <<PK>>
+    --
+    * child_id : uuid <<FK children, cascade>>
+    * author_id : uuid <<FK users>>
+    * body : text <<1-4000>>
+    * created_at, updated_at : timestamptz
+  }
+}
+
+package "Monitoring (Arsen)" {
+  entity "growth_measurements" as gm {
+    * id : uuid <<PK>>
+    --
+    * child_id : uuid <<FK children, cascade>>
+    * author_id : uuid <<FK users>>
+    * author_role : 'parent' | 'specialist'
+    * measured_on : date
+    weight_kg : numeric(5,2) <<0.3-50>>
+    length_cm : numeric(4,1) <<25-150>>
+    length_method : 'recumbent' | 'standing'
+    head_circumference_cm : numeric(4,1) <<18-60>>
+    * created_at, updated_at : timestamptz
+    deleted_at : timestamptz
+    --
+    check: at least one value;
+    length and method together
+  }
+
+  entity "growth_measurement_revisions" as rev {
+    * id : uuid <<PK>>
+    --
+    * measurement_id : uuid <<FK, cascade>>
+    * action : 'updated' | 'deleted'
+    * before_values : jsonb
+    after_values : jsonb
+    * changed_by : uuid <<FK users>>
+    * changed_at : timestamptz
+  }
+
+  entity "milestone_observations" as mo {
+    * id : uuid <<PK>>
+    --
+    * child_id : uuid <<FK children, cascade>>
+    * item_id : text <<catalog id>>
+    * author_id : uuid <<FK users>>
+    * author_role : 'parent' | 'specialist'
+    * answer : 'yes' | 'not_yet' | 'not_sure'
+    * observed_on : date
+    * created_at : timestamptz
+  }
+
+  entity "signals" as sig {
+    * id : uuid <<PK>>
+    --
+    * child_id : uuid <<FK children, cascade>>
+    * type : 'G1' | 'G2' | 'M1' | 'W1'
+    * subject : text <<indicator or item id>>
+    * source_id : uuid <<measurement or observation>>
+    * reference : text <<WHO-2006, CDC-2022, WHO-MGRS-2006>>
+    * value : text <<z-score or answer>>
+    * observed_on : date
+    * created_at : timestamptz
+    discussed_at : timestamptz
+    discussed_by : uuid <<FK users>>
+    resolved_at : timestamptz
+    --
+    unique (child_id, type, subject)
+    where resolved_at is null
+  }
+
+  entity "notifications" as ntf {
+    * id : uuid <<PK>>
+    --
+    * recipient_id : uuid <<FK users, cascade>>
+    * child_id : uuid <<FK children, cascade>>
+    * kind : checklist_due | examination_due
+      | signal_raised | note_added
+    * params : jsonb
+    * dedup_key : text
+    * created_at : timestamptz
+    read_at : timestamptz
+    --
+    unique (recipient_id, dedup_key)
+  }
+}
+
+package "Reference data (embedded in the binary, not in the database)" {
+  entity "anthro/data/*.txt" as lms <<reference>> {
+    WHO-2006 LMS tables from the WHO anthro package:
+    weight, length/height, BMI, head circumference by day;
+    weight-for-length and weight-for-height by 0.1 cm
+  }
+
+  entity "reference/data/*.json" as items <<reference>> {
+    milestones.json: 159 CDC 2022 items + 6 WHO motor items
+    examinations.json: Order KR DSM-264/2020, Annex 1
+    signal_rules.json: thresholds and sources
+  }
+}
+
+users ||--o{ children : owns
+children ||--o{ grants
+users ||--o{ grants : specialist
+children ||--o{ notes
+users ||--o{ notes : author
+children ||--o{ gm
+gm ||--o{ rev
+children ||--o{ mo
+children ||--o{ sig
+gm |o..o{ sig : "G1, G2"
+mo |o..o{ sig : "M1, W1"
+users ||--o{ ntf : recipient
+children ||--o{ ntf
+lms ..> gm : z-scores computed on read
+items ..> mo : item_id
+@enduml

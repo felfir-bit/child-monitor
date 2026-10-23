@@ -1,0 +1,70 @@
+@startuml sequence-access
+title Sequence: parent grants and revokes a specialist's access (Zhan's modules)
+
+skinparam defaultFontName Arial
+skinparam shadowing false
+skinparam sequence {
+  ParticipantBackgroundColor #FFFFFF
+  ParticipantBorderColor #4A5563
+  LifeLineBorderColor #9AA4B0
+  ActorBorderColor #2F3B4A
+  ActorBackgroundColor #FFFFFF
+}
+autonumber
+
+actor "Parent\n(owner)" as Par
+actor "Specialist" as Sp
+participant "API\n(authenticate + handlers)" as API
+participant "GrantService" as GS
+participant "NoteService" as NS
+participant "AccessPolicy" as P
+database "PostgreSQL" as DB
+
+== Grant ==
+Par -> API : POST /children/{id}/access-grants\n{ specialist_email }
+API -> GS : Create(actor, childID, email)
+GS -> P : RequireOwner(childID, actor)
+P -> DB : children.owner_id = actor?
+alt not the owner
+  GS --> API : 404 (or 403 for a granted specialist)
+else owner
+  GS -> DB : find user by email
+  alt unknown email or role is not specialist
+    GS --> API : 422
+  else active grant already exists
+    GS --> API : 409
+  else
+    GS -> DB : insert access_grants
+    GS --> API : 201
+  end
+end
+
+== Specialist works with the child ==
+Sp -> API : GET /children/{id}
+API -> P : RequireChildAccess(childID, actor)
+P -> DB : active grant (child, specialist)?
+P --> API : child
+API --> Sp : 200 child profile
+Sp -> API : POST /children/{id}/notes { body }
+API -> NS : Create(actor, childID, body)
+NS -> P : RequireChildAccess(childID, actor)
+NS -> DB : insert specialist_notes (author = specialist)
+NS --> Sp : 201
+
+== Revoke ==
+Par -> API : DELETE /children/{id}/access-grants/{grantId}
+API -> GS : Revoke(actor, childID, grantID)
+GS -> P : RequireOwner(childID, actor)
+GS -> DB : set revoked_at = now
+GS --> Par : 204
+
+Sp -> API : GET /children/{id}/notes\n(token still valid)
+API -> P : RequireChildAccess(childID, actor)
+P -> DB : active grant? -> none
+API --> Sp : 404 (access ends at the next request)
+
+note over P
+  Grants are checked in the database on every
+  request, not taken from the token (FR-ACC-05).
+end note
+@enduml

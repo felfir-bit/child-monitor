@@ -1,0 +1,63 @@
+@startuml system-context
+title System context: monitoring growth and development of children aged 0-5
+
+skinparam defaultFontName Arial
+skinparam shadowing false
+skinparam rectangle {
+  BackgroundColor #FFFFFF
+  BorderColor #4A5563
+}
+skinparam rectangle<<planned>> {
+  BackgroundColor #F1F3F5
+  BorderColor #8A939E
+  BorderStyle dashed
+  FontColor #4A5563
+}
+skinparam rectangle<<external>> {
+  BackgroundColor #FFF6E5
+  BorderColor #B7791F
+}
+skinparam rectangle<<reference>> {
+  BackgroundColor #EEF6EE
+  BorderColor #3F7F4F
+}
+skinparam actor {
+  BackgroundColor #FFFFFF
+  BorderColor #2F3B4A
+}
+
+actor "Parent\n(owner of the child's record)" as Parent
+actor "Specialist\n(pediatric specialist, speech therapist,\npsychologist, kindergarten teacher)" as Specialist
+actor "Operator" as Operator
+
+rectangle "Polyclinic\n(preventive examinations:\nweight, height, head circumference)" as Clinic <<external>>
+
+rectangle "Child Development Monitor\n\nprofiles and access | growth vs WHO |\nmilestones vs CDC / WHO | signals |\nhistory | reminders" as System #E8EEF4
+
+rectangle "WHO Child Growth Standards\n(LMS tables 0-60 months from the\nWHO anthro package; windows for\n6 motor milestones)" as WHO <<reference>>
+rectangle "CDC milestone checklists\n(2022 revision, 12 checklists,\n2 months to 5 years)" as CDC <<reference>>
+rectangle "Kazakhstan MoH rules\n(examination ages, Order\nKR DSM-264/2020)" as KZ <<reference>>
+
+rectangle "In-app notifications\n(ADR-007; e-mail and push later)" as Notify
+rectangle "Prometheus" as Prometheus <<external>>
+rectangle "Grafana" as Grafana <<external>>
+
+Clinic ..> Parent : measured values\n(no system integration)
+Parent --> System : child profile, measurements,\nmilestone answers, access grants
+Specialist --> System : granted children only:\nobservations, notes
+System --> Parent : charts, progress,\nsignals, reminders
+System --> Specialist : charts, history, signals
+WHO ..> System : embedded as versioned\nreference data (WHO-2006)
+CDC ..> System : embedded as versioned\nreference data (CDC-2022)
+KZ ..> System : examination ages\nfor reminders
+System --> Notify : reminders, new signals,\nnew notes
+Prometheus --> System : scrape /metrics
+Grafana --> Prometheus : PromQL
+Operator --> Grafana
+
+note bottom of System
+  Signals suggest a conversation with a specialist;
+  the system never produces a diagnosis.
+  Evaluation uses synthetic data only.
+end note
+@enduml

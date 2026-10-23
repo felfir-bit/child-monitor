@@ -1,0 +1,69 @@
+@startuml sequence-measurement
+title Sequence: recording a growth measurement (POST /api/v1/children/{childId}/measurements)
+
+skinparam defaultFontName Arial
+skinparam shadowing false
+skinparam sequence {
+  ParticipantBackgroundColor #FFFFFF
+  ParticipantBorderColor #4A5563
+  LifeLineBorderColor #9AA4B0
+  ActorBorderColor #2F3B4A
+  ActorBackgroundColor #FFFFFF
+}
+autonumber
+
+actor "Parent or\ngranted specialist" as U
+participant "Client\n(PWA or Swagger UI)" as W
+participant "authenticate\n(JWT)" as MW
+participant "GrowthService" as G
+participant "AccessPolicy" as P
+participant "anthro" as A
+participant "SignalService" as S
+participant "NotificationService" as N
+database "PostgreSQL" as DB
+
+U -> W : date, weight, length/height,\nmethod, head circumference
+W -> MW : POST .../measurements\nAuthorization: Bearer JWT
+alt token missing, expired or tampered
+  MW --> W : 401
+else valid token
+  MW -> G : Record(actor, childID, input)
+  G -> P : RequireChildAccess(childID, actor)
+  P -> DB : child; owner? active grant?
+  alt not owner and no active grant
+    P --> G : not found
+    G --> W : 404 (child is not visible)
+  else access allowed
+    P --> G : child (birth date, sex)
+    G -> G : validate and round values\n(limits, length method)
+    alt invalid field
+      G --> W : 400 validation_failed
+    else date in future or before birth;\nstanding height before 9 months
+      G --> W : 422
+    else valid
+      G -> DB : insert growth_measurements\n(author, role)
+      G -> S : Evaluate(child, author)
+      S -> DB : measurements, observations, signals
+      loop each indicator: latest measurement with a score
+        S -> A : Assess(sex, age in days, values)
+        A -> A : standardize length (+-0.7 cm);\nz = ((value / M)^L - 1) / (L * S);\nWHO rule beyond +-3 SD; flags
+        A --> S : z, percentile, implausible
+      end
+      alt implausible (WHO flags)
+        S -> DB : open G2 (check the entry)
+      else |z| > 2
+        S -> DB : open G1 (discuss with pediatrician)
+      end
+      S -> DB : resolve open signals whose\ncondition ended
+      opt new signals
+        S -> N : SignalsRaised(child, signals, author)
+        N -> P : Audience(child)
+        N -> DB : insert notifications\n(owner and granted specialists, except author)
+      end
+      G -> A : Assess(measurement)
+      G --> W : 201: measurement, z-scores, percentiles,\nreference WHO-2006, new_signals
+      W --> U : point on the growth chart;\nsignal text if any
+    end
+  end
+end
+@enduml
