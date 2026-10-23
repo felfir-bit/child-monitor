@@ -1,0 +1,71 @@
+@startuml container
+title Containers and deployment (docker-compose)
+
+skinparam defaultFontName Arial
+skinparam shadowing false
+skinparam component {
+  BackgroundColor #FFFFFF
+  BorderColor #4A5563
+}
+skinparam component<<planned>> {
+  BackgroundColor #F1F3F5
+  BorderColor #8A939E
+  BorderStyle dashed
+  FontColor #4A5563
+}
+skinparam database {
+  BackgroundColor #FFFFFF
+  BorderColor #4A5563
+}
+skinparam node {
+  BackgroundColor #FBFCFD
+  BorderColor #9AA4B0
+}
+skinparam actor {
+  BackgroundColor #FFFFFF
+  BorderColor #2F3B4A
+}
+
+actor "Parent" as Parent
+actor "Specialist" as Specialist
+actor "Operator" as Operator
+
+node "Browser (phone / PC)" as Browser {
+  component "Web client\n(React PWA, next step;\nno third-party trackers)" as Web <<planned>>
+  component "Swagger UI at /docs\n(used for the demo)" as Swagger
+}
+
+node "Server in Kazakhstan (Law 94-V, art. 12)\ndocker-compose" as Compose {
+  component "Reverse proxy\n(HTTPS termination,\ndeployment requirement)" as Proxy <<planned>>
+  component "API container (Go / Fiber, port 8080)\nREST API, 28 paths\nembedded WHO tables and milestone catalog\nreminder job (REMINDER_INTERVAL)\napplies migrations at start" as API #E8EEF4
+
+  node "PostgreSQL 16 container" as PGNode {
+    database "users, children, access_grants,\nspecialist_notes" as Core
+    database "growth_measurements, revisions,\nmilestone_observations, signals,\nnotifications, schema_migrations" as Mon
+  }
+
+  component "Prometheus\n(port 9090)" as Prom
+  component "Grafana\n(port 3000, provisioned dashboard)" as Graf
+}
+
+Parent --> Web
+Specialist --> Web
+Parent ..> Swagger
+Operator --> Graf
+
+Web --> Proxy : HTTPS
+Swagger --> API : HTTP, JSON REST,\nBearer JWT
+Proxy --> API : HTTP, JSON REST, Bearer JWT
+API --> Core : SQL (pgx)
+API --> Mon : SQL (pgx)
+Prom --> API : scrape GET /metrics
+Graf --> Prom : PromQL
+
+note right of API
+  Reference data is part of the binary
+  (tags WHO-2006 and catalog 2026-10-1)
+  and is listed by GET /api/v1/reference.
+  Z-scores are computed on read, so the
+  database never holds stale scores.
+end note
+@enduml

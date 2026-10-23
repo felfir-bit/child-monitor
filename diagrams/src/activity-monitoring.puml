@@ -1,0 +1,71 @@
+@startuml activity-monitoring
+title Activity: monitoring cycle for one child (as implemented)
+
+skinparam defaultFontName Arial
+skinparam shadowing false
+skinparam activity {
+  BackgroundColor #FFFFFF
+  BorderColor #4A5563
+  DiamondBackgroundColor #FFFFFF
+  DiamondBorderColor #4A5563
+}
+
+|Parent / specialist|
+start
+:Open the child's overview;
+
+|System|
+:Compute chronological age (completed months);
+if (gestational age < 37 weeks\nand chronological age < 24 months?) then (yes)
+  :Corrected age =\nage - (40 - gestational age) weeks;
+else (no)
+  :Use chronological age;
+endif
+:Show open signals, current checklist progress,\nnext checklist, last and next examination\n(Order KR DSM-264/2020);
+
+|Parent / specialist|
+split
+  :Enter measurement\n(weight, length/height + method, head);
+  |System|
+  if (date in future or before birth,\nor standing height before 9 months?) then (yes)
+    :Reject (422);
+    stop
+  else (no)
+  endif
+  if (age < 60 months and sex known?) then (yes)
+    :Compute z-scores and percentiles\n(WHO anthro algorithm);
+  else (no)
+    :Store and plot without z-score\n(reason in the response);
+  endif
+split again
+  |Parent / specialist|
+  :Answer checklist items\n(yes / not yet / not sure);
+  |System|
+  :Append observation with author and role;
+end split
+
+|System|
+:Evaluate signals for the child\n(latest value per indicator,\nlatest answer per item);
+if (WHO implausible flag?) then (yes)
+  :G2 "check this measurement";
+elseif (|z| > 2?) then (yes)
+  :G1 "outside the range of about 95%\nof healthy children; discuss\nwith your pediatrician";
+endif
+if (CDC item "not yet" and corrected age\n>= checklist age?) then (yes)
+  :M1 "most children (at least 3 of 4)\ndo this by this age";
+endif
+if (WHO motor item "not yet" after the\nwindow's upper end (not crawling)?) then (yes)
+  :W1 "most children reach this\nmilestone by this age";
+endif
+:Resolve open signals whose condition ended;
+if (new signal?) then (yes)
+  :Notify owner and granted specialists\n(except the author);
+endif
+
+|Parent / specialist|
+:Review signals; discuss with specialist;\nmark as discussed;
+
+|System|
+:Reminder job (hourly): re-evaluate signals,\nremind when a checklist or examination age is reached\n(once per age);
+stop
+@enduml

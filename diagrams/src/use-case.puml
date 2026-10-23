@@ -1,0 +1,85 @@
+@startuml use-case
+title Use cases: monitoring growth and development of a child aged 0-5
+
+left to right direction
+skinparam defaultFontName Arial
+skinparam shadowing false
+skinparam usecase {
+  BackgroundColor #FFFFFF
+  BorderColor #4A5563
+}
+skinparam actor {
+  BackgroundColor #FFFFFF
+  BorderColor #2F3B4A
+}
+
+actor "Parent" as Parent
+actor "Specialist" as Specialist
+actor "User\n(owner parent or specialist\nwith an active grant)" as User
+actor "Scheduler\n(time)" as Clock
+
+Parent -up-|> User
+Specialist -up-|> User
+
+rectangle "Child Development Monitor" {
+  rectangle "Profiles and access (Zhan)" {
+    usecase "UC1. Register (with consent)\nand log in" as UC1
+    usecase "UC2. Manage child profile\n(birth date, sex, gestational age)" as UC2
+    usecase "UC3. Grant / revoke access\nfor a specialist" as UC3
+    usecase "UC4. View children\n(own or granted)" as UC4
+    usecase "UC5. Write and edit own notes" as UC5
+    usecase "UC6. Read specialist notes" as UC6
+  }
+
+  rectangle "Monitoring (Arsen)" {
+    usecase "UC7. View child overview\n(age, corrected age, open signals,\nnext checklist and examination)" as UC7
+    usecase "UC8. Record growth measurement\n(weight, length/height, head)" as UC8
+    usecase "UC9. View growth charts\n(WHO z-score lines, percentiles)" as UC9
+    usecase "UC10. Answer milestone checklist\n(CDC 2022, WHO motor)" as UC10
+    usecase "UC11. View milestone progress\nby domain" as UC11
+    usecase "UC12. Review signals and\nmark as discussed" as UC12
+    usecase "UC13. View child history" as UC13
+    usecase "UC14. Receive reminders\nand notifications" as UC14
+    usecase "Compute z-scores\n(WHO anthro algorithm)" as UCZ
+    usecase "Apply signal rules\n(G1, G2, M1, W1)" as UCS
+    usecase "Select checklist by age\nor corrected age" as UCC
+  }
+}
+
+User --> UC1
+User --> UC4
+User --> UC6
+User --> UC7
+User --> UC8
+User --> UC9
+User --> UC10
+User --> UC11
+User --> UC12
+User --> UC13
+User --> UC14
+
+Parent --> UC2
+Parent --> UC3
+Specialist --> UC5
+
+UC8 ..> UCZ : <<include>>
+UC8 ..> UCS : <<include>>
+UC9 ..> UCZ : <<include>>
+UC10 ..> UCC : <<include>>
+UC10 ..> UCS : <<include>>
+Clock --> UC14 : checklist due,\nexamination age\n(ReminderService)
+Clock --> UCS : age reached\n(M1, W1)
+
+note right of User
+  A specialist sees and changes
+  records only for children with an
+  active grant. Parent and specialist
+  answers are stored separately.
+end note
+
+note right of UCS
+  Signals say "discuss this with
+  your pediatrician". They are
+  never worded as a diagnosis.
+end note
+@enduml

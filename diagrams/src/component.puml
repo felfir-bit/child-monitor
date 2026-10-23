@@ -1,0 +1,105 @@
+@startuml component
+title Components of the Go / Fiber server (src/internal) and the client
+
+skinparam defaultFontName Arial
+skinparam shadowing false
+skinparam componentStyle rectangle
+skinparam nodesep 30
+skinparam ranksep 40
+top to bottom direction
+skinparam component {
+  BackgroundColor #FFFFFF
+  BorderColor #4A5563
+}
+skinparam component<<planned>> {
+  BackgroundColor #F1F3F5
+  BorderColor #8A939E
+  BorderStyle dashed
+  FontColor #4A5563
+}
+skinparam component<<reference>> {
+  BackgroundColor #EEF6EE
+  BorderColor #3F7F4F
+}
+skinparam rectangle {
+  BackgroundColor #FBFCFD
+  BorderColor #9AA4B0
+}
+skinparam rectangle<<planned>> {
+  BackgroundColor #F7F8F9
+  BorderColor #8A939E
+  BorderStyle dashed
+}
+skinparam database {
+  BackgroundColor #FFFFFF
+  BorderColor #4A5563
+}
+
+rectangle "Web client (React PWA, next step)" as Client <<planned>> {
+  component "Screens for parents\nand specialists" as UI <<planned>>
+}
+
+rectangle "httpapi" as Http {
+  component "authenticate\n(JWT HS256)" as AuthMW
+  component "handlers.go\nauth, children,\naccess-grants, notes" as H1
+  component "monitoring.go\nmeasurements, growth, milestones,\nsignals, history, overview,\nnotifications, reference" as H2
+  component "responses.go\nJSON mapping, lang=en|ru" as Resp
+  component "observe (metrics), /healthz,\n/metrics, /docs, openapi.yaml" as Ops
+}
+
+rectangle "service: Zhan" as SvcZ {
+  component "AuthService\n(consent)" as AuthSvc
+  component "ChildService\n(sex, gestational age)" as ChildSvc
+  component "GrantService" as GrantSvc
+  component "NoteService" as NoteSvc
+  component "AccessPolicy\nRequireChildAccess, RequireOwner,\nAudience" as Policy
+}
+
+rectangle "service: Arsen" as SvcA {
+  component "GrowthService\nmeasurements, revisions,\nassessments, charts" as GrowthSvc
+  component "MilestoneService\nchecklist by corrected age,\nanswers, progress" as MsSvc
+  component "SignalService\nG1, G2, M1, W1:\nopen, refresh, resolve, discuss" as SigSvc
+  component "HistoryService\nhistory, overview" as HistSvc
+  component "NotificationService\nin-app notifications" as NotifSvc
+  component "ReminderService\nperiodic job" as RemSvc
+}
+
+rectangle "pure packages" as Pure {
+  component "anthro\nWHO z-scores, percentiles,\nreference curves" as Anthro
+  component "reference\nCDC 2022 + WHO motor catalog,\nexamination ages, signal rules" as Ref <<reference>>
+  component "domain\nentities, validation,\nAgeOf (corrected age), errors" as Domain
+  component "security\nJWT, Argon2id" as Security
+}
+
+rectangle "store" as Store {
+  component "Repository interfaces\n(8 repositories)" as Repos
+  component "postgres (pgx)" as PG
+  component "memory (tests)" as Mem
+}
+
+component "migrations\n001_init, 002_monitoring\n(embedded, applied at start)" as Mig
+database "PostgreSQL 16" as DB
+
+UI ..> AuthMW : HTTPS, JSON,\nBearer JWT
+AuthMW --> H1
+AuthMW --> H2
+H1 --> SvcZ
+H2 --> SvcA
+
+SvcA --> Policy : every request:\nRequireChildAccess
+ChildSvc --> RemSvc : ChildListener
+NoteSvc --> NotifSvc : NoteListener
+GrowthSvc --> SigSvc : Evaluate
+MsSvc --> SigSvc : Evaluate
+RemSvc --> SigSvc : Evaluate
+SigSvc --> NotifSvc : SignalListener
+
+SvcA --> Pure : z-scores, catalog,\nage rules
+SvcZ --> Pure
+SvcZ --> Repos
+SvcA --> Repos
+Repos <|.. PG
+Repos <|.. Mem
+PG --> DB : SQL
+Mig --> DB : schema
+@enduml
