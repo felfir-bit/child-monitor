@@ -3,7 +3,7 @@
 **Development of a Digital System for Monitoring Child Development**
 
 Diploma project, Software Engineering, group SE-2410, Astana IT University.
-Task tracking: [YouTrack, project DIP](https://child-monitoring.youtrack.cloud). Repository: [felfir-bit/child-monitor](https://github.com/felfir-bit/child-monitor).
+Task tracking: [YouTrack, project DIP](https://chil-monitoring-system.youtrack.cloud/projects/DIP). Repository: [felfir-bit/child-monitor](https://github.com/felfir-bit/child-monitor).
 
 ## What the system will do
 

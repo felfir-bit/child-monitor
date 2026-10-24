@@ -6,7 +6,7 @@
 
 Working name: **Child Development Monitor**
 
-Repository: [felfir-bit/child-monitor](https://github.com/felfir-bit/child-monitor). Task tracking: [YouTrack, project DIP](https://child-monitoring.youtrack.cloud).
+Repository: [felfir-bit/child-monitor](https://github.com/felfir-bit/child-monitor). Task tracking: [YouTrack, project DIP](https://chil-monitoring-system.youtrack.cloud/projects/DIP).
 
 ## II. Project Team and Supervision
 
