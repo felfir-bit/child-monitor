@@ -1,10 +1,12 @@
 # 7. Architecture and Diagrams
 
+**Status at pre-defense 1:** this document describes the target design. Implementation starts at milestone M2 (document 10); `src/`, `tests/` and `config/` are empty in this submission. Every package, file, migration, table and endpoint named below is planned.
+
 ## 7.1 Architectural style
 
 The system is a **modular monolith** on the server side and a **single-page web client** installable as a PWA.
 
-- One Go service (`src/`) contains all server modules. Modules are separated by package and by layer, so each can be developed, tested and later extracted without changing the contract.
+- One Go service (planned in `src/`) will contain all server modules. Modules are separated by package and by layer, so each can be developed, tested and later extracted without changing the contract.
 - The client talks to the service only through the documented REST API (document 05, decision 3).
 - Persistence is one PostgreSQL database. Each module owns its tables.
 
@@ -12,7 +14,7 @@ A modular monolith was chosen over microservices because the team has two studen
 
 ## 7.2 Diagrams
 
-Eight PlantUML sources are in `diagrams/src/`, with SVG and PNG exports in `diagrams/rendered/`. The first four are the diagrams required by the checklist; the other four show how the monitoring model (document 00) works. They are drawn from the code: package, service, table and endpoint names are the real ones.
+Eight PlantUML sources are in `diagrams/src/`, with SVG and PNG exports in `diagrams/rendered/`. The first four are the diagrams required by the checklist; the other four show how the monitoring model (document 00) works. They show the target design: package, service, table and endpoint names are the planned names used in this document.
 
 | Diagram | Source | What it shows |
 |---|---|---|
@@ -20,12 +22,14 @@ Eight PlantUML sources are in `diagrams/src/`, with SVG and PNG exports in `diag
 | Use case | `diagrams/src/use-case.puml` | UC1 to UC6 (profiles and access, Zhan) and UC7 to UC14 (overview, growth, milestones, signals, history, reminders, Arsen), with the included z-score, checklist selection and signal rules |
 | Component | `diagrams/src/component.puml` | Go packages and services: HTTP layer, the services of both students, AccessPolicy, the `anthro` and `reference` packages, stores and migrations |
 | Container | `diagrams/src/container.puml` | Browser client, reverse proxy, API container (with the reminder job and embedded reference data), PostgreSQL, Prometheus, Grafana; server located in Kazakhstan |
-| Data model | `diagrams/src/data-model.puml` | The ten tables created by the migrations, with keys, relations and cascade rules |
+| Data model | `diagrams/src/data-model.puml` | The ten planned tables, with keys, relations and cascade rules |
 | Sequence: measurement | `diagrams/src/sequence-measurement.puml` | Recording a measurement: authentication, access check, validation, z-scores, signal evaluation, notifications |
 | Sequence: access | `diagrams/src/sequence-access.puml` | Granting access, the specialist's work with the child, revocation taking effect at the next request |
 | Activity: monitoring cycle | `diagrams/src/activity-monitoring.puml` | Corrected age, measurement and checklist branches, signal rules G1, G2, M1, W1, resolution, notifications and the reminder job |
 
 ## 7.3 Layers of the server
+
+Planned Go packages:
 
 ```
 HTTP layer        internal/httpapi     Fiber routes, handlers, request and response mapping, JWT middleware,
@@ -50,7 +54,7 @@ Dependencies point downwards only. The HTTP layer contains no access rules; it t
 
 ## 7.4 Components and responsibilities
 
-| Component | Code | Responsibility | Owner |
+| Component | Planned code location | Responsibility | Owner |
 |---|---|---|---|
 | Auth handlers and service | `service/auth.go` | Registration with consent, login, current user | Zhan |
 | Token and password module | `security/` | JWT issuing and validation, Argon2id hashing | Zhan |
@@ -67,11 +71,11 @@ Dependencies point downwards only. The HTTP layer contains no access rules; it t
 | SignalService | `service/signals.go`, `service/signal_rules.go` | Rules G1, G2, M1 and W1, opening, refreshing and resolving signals, marking as discussed | Arsen |
 | HistoryService | `service/history.go` | Combined dated history with type filter; child overview | Arsen |
 | NotificationService and ReminderService | `service/notifications.go`, `service/reminders.go`, `service/messages.go` | In-app notifications for signals, notes, due checklists and examinations; the periodic job; texts in English and Russian | Arsen |
-| Web client (React PWA) | `client/` (next step) | Screens for parents and specialists, service worker and manifest | Both, split by screens |
+| Web client (React PWA) | `client/` (M4) | Screens for parents and specialists, service worker and manifest | Both, split by screens |
 
 ## 7.5 Data model
 
-Diagram: `diagrams/rendered/data-model.svg`. PostgreSQL 16, schema in `src/migrations/001_init.sql` and `002_monitoring.sql`, applied by the API at start-up and recorded in `schema_migrations`. All timestamps are `TIMESTAMPTZ` in UTC. Every table that belongs to a child references `children(id)` with `ON DELETE CASCADE`, so deleting a child removes all of its records.
+Diagram: `diagrams/rendered/data-model.svg`. PostgreSQL 16. The schema is planned as two migrations, `src/migrations/001_init.sql` (M2) and `002_monitoring.sql` (M3), applied by the API at start-up and recorded in `schema_migrations`. All timestamps are `TIMESTAMPTZ` in UTC. Every table that belongs to a child references `children(id)` with `ON DELETE CASCADE`, so deleting a child removes all of its records.
 
 ```
 users                         id, email (unique, lowercased), full_name, role ('parent' | 'specialist'),
@@ -108,9 +112,9 @@ notifications                 id, recipient_id -> users, child_id -> children, k
 schema_migrations             version, applied_at
 ```
 
-Reference data is not stored in the database. The WHO LMS tables (WHO's own files from the `anthro` package), the milestone catalog, the examination ages and the signal rules are embedded in the binary from `src/internal/anthro/data/` and `src/internal/reference/data/`, validated at start-up and identified by version tags (`WHO-2006`, catalog `2026-10-1`). Records keep only the item id or indicator code, so a translation fix never touches stored data.
+Reference data will not be stored in the database. The WHO LMS tables (WHO's own files from the `anthro` package), the milestone catalog, the examination ages and the signal rules will be embedded in the binary from `src/internal/anthro/data/` and `src/internal/reference/data/`, validated at start-up and identified by version tags (`WHO-2006`, catalog `2026-10-1`). Records keep only the item id or indicator code, so a translation fix never touches stored data.
 
-Z-scores are computed when read, from the measurement and the WHO table for the child's sex and age (or length), so a correction of the reference data or of the child's birth date never leaves stale values. Milestone answers are append-only: a new answer is added, and the latest one counts.
+Z-scores will be computed when read, from the measurement and the WHO table for the child's sex and age (or length), so a correction of the reference data or of the child's birth date never leaves stale values. Milestone answers are append-only: a new answer is added, and the latest one counts.
 
 ## 7.6 Key flows
 
@@ -153,7 +157,7 @@ Correction and deletion (`PUT` and `DELETE /api/v1/measurements/{id}`) are allow
 
 ### Reminder job
 
-`ReminderService.Run` starts with the API and runs at start and every `REMINDER_INTERVAL` (default one hour). For each child it re-evaluates signals (an earlier `not_yet` becomes M1 when the child reaches the checklist age), and creates `checklist_due` and `examination_due` notifications for the most recent ages reached. A unique key per recipient makes repeated runs harmless. The same check runs immediately when a child is created or edited.
+`ReminderService.Run` will start with the API and run at start and every `REMINDER_INTERVAL` (default one hour). For each child it re-evaluates signals (an earlier `not_yet` becomes M1 when the child reaches the checklist age), and creates `checklist_due` and `examination_due` notifications for the most recent ages reached. A unique key per recipient makes repeated runs harmless. The same check runs immediately when a child is created or edited.
 
 ## 7.7 Security architecture
 
@@ -177,7 +181,7 @@ Threat notes for the pre-defense:
 
 ## 7.8 Deployment view
 
-The `docker-compose.yml` in `src/` defines four services:
+The planned `src/docker-compose.yml` (milestone M2) defines four services:
 
 | Service | Image or build | Port | Notes |
 |---|---|---|---|
@@ -190,7 +194,7 @@ Configuration: `HTTP_ADDR`, `DATABASE_URL`, `JWT_SECRET` (at least 32 bytes), `J
 
 ## 7.9 Interface contract
 
-Full contract: `src/api/openapi.yaml` (OpenAPI 3.0.3, 28 paths), served at `/api/v1/openapi.yaml` and shown at `/docs`. A test checks that every route registered in the server is documented.
+Planned contract: `src/api/openapi.yaml` (OpenAPI 3.0.3, 28 paths, milestone M2 for Zhan's endpoints and M3 for Arsen's), to be served at `/api/v1/openapi.yaml` and shown at `/docs`. A planned test will check that every route registered in the server is documented.
 
 | Area | Endpoints |
 |---|---|
@@ -212,10 +216,10 @@ Error body: `{"error": {"code": "snake_case_code", "message": "human readable te
 
 The modules integrate through the service layer, not through each other's tables:
 
-- `AccessPolicy.RequireChildAccess(ctx, childID, actor)` (owner or active grant), `AccessPolicy.RequireOwner(ctx, childID, actor)` (owner only) and `AccessPolicy.Audience(ctx, child)` (owner and granted specialists) are the single source of truth for who may see or change a child's data and who is notified. Every monitoring service calls them first. In `src/internal/service/policy.go`.
+- `AccessPolicy.RequireChildAccess(ctx, childID, actor)` (owner or active grant), `AccessPolicy.RequireOwner(ctx, childID, actor)` (owner only) and `AccessPolicy.Audience(ctx, child)` (owner and granted specialists) are the single source of truth for who may see or change a child's data and who is notified. Every monitoring service will call them first. Planned location: `src/internal/service/policy.go`.
 - The monitoring tables reference `children(id)` and `users(id)` with foreign keys and cascade rules.
-- The core services expose two listener interfaces: `ChildListener` (a child was created or edited: reminders and signals are re-checked) and `NoteListener` (a note was added: the parent is notified). `SignalListener` connects SignalService to NotificationService. The wiring is in `src/internal/service/services.go`, so each module can be tested without the others.
-- Age and corrected age are computed in one place, `domain.AgeOf`, with the rule from `signal_rules.json`.
+- The core services expose two listener interfaces: `ChildListener` (a child was created or edited: reminders and signals are re-checked) and `NoteListener` (a note was added: the parent is notified). `SignalListener` connects SignalService to NotificationService. The wiring is planned in `src/internal/service/services.go`, so each module can be tested without the others.
+- Age and corrected age will be computed in one place, `domain.AgeOf`, with the rule from `signal_rules.json`.
 
 ## 7.11 Architecture decision records
 
@@ -230,4 +234,3 @@ Short records are in `docs/adr/`:
 - ADR-007 Notification channel: in-app notifications in version 1 (accepted)
 
 Each record cites the comparison in document 05.
-# docs: add architecture and diagrams (DIP-8) - generated at 2026-10-21 09:45:00 +0500
