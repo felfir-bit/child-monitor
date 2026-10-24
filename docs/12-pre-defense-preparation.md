@@ -9,7 +9,7 @@ This document checks the submission against the M1 content, records who presents
 | Item | Link |
 |---|---|
 | Repository | https://github.com/felfir-bit/child-monitor |
-| YouTrack | https://child-monitoring.youtrack.cloud |
+| YouTrack | https://chil-monitoring-system.youtrack.cloud/projects/DIP |
 | Documentation index | [docs/README.md](README.md) |
 | Submission tag | `pre-defense-1` |
 
