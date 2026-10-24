@@ -2,130 +2,128 @@
 
 ## 3.1 Scope and method
 
-This review covers four questions that shape the system design:
+The review answers five questions that shape the design:
 
-1. How is child development monitored in practice, and what are the strengths and limits of standardized screening?
-2. What is the evidence for digital tools that parents and clinicians use to record or screen development?
-3. What is the evidence for mobile and digital apps that follow children's growth over time?
-4. Which security and data-protection rules apply to records about young children?
+1. How is child development monitored in practice, and which references are used for growth and milestones?
+2. How reliable are parent reports and digital screening tools for an individual child?
+3. What is known about mobile apps that parents use to track growth and development?
+4. Which rules apply in Kazakhstan to preventive examinations, development screening and personal data?
+5. What privacy problems do child-related apps have?
 
-**Method.** The sources were identified through web search (queries are listed in appendix A) and checked by fetching the publisher or repository page. Bibliographic details marked as *to confirm* were not visible in the pages that could be read and must be checked against the DOI or PubMed record before the final submission. This is a structured narrative review, not a systematic review. A systematic review would require a predefined protocol and database searches, which are listed as future work.
+**Method.** This is a structured narrative review, not a systematic review. Sources were found through searches in Google Scholar, PubMed, publisher sites and the official legal database of Kazakhstan (adilet.zan.kz), with queries such as "evidence-informed milestones developmental surveillance", "parent report clinician agreement infant development", "mobile app growth monitoring children systematic review", "child care app privacy" and the titles of the Kazakhstan orders. Each source was opened at its publisher, journal or official page; the links were last checked on 24 October 2026. A systematic search with a predefined protocol is outside the scope of the project.
 
-**Currency.** Rapidly changing topics (digital screening, mHealth) draw their core sources from 2020 to 2025. Older sources (2001, 2013, 2017) are kept only as foundations: the ASQ accuracy study, the Lancet series on early childhood development and the RBAC standard.
+**Currency.** Sources on apps and digital screening are from 2019 to 2025. The WHO standards (2006) are kept because they are the current international reference for children under five.
 
-## 3.2 Scientific publications (9 sources)
+Technical sources (password storage, tokens, PWA, frameworks) are listed separately in document 05, section 5.11 (T1 to T8).
 
-| ID | Citation | Type | Verification status |
-|---|---|---|---|
-| S1 | Lipkin PH, Macias MM; Council on Children With Disabilities. *Promoting Optimal Development: Identifying Infants and Young Children With Developmental Disorders Through Developmental Surveillance and Screening.* Pediatrics. 2020;145(1):e20193449. | Clinical policy report (peer-reviewed journal) | Title, journal, volume and article number confirmed on the AAP-hosted version; author list *to confirm* |
-| S2 | Black MM, Walker SP, Fernald LCH, et al. *Early childhood development coming of age: science through the life course.* Lancet. 2017;389(10064):77-90. | Lancet series paper | Title confirmed; journal details *to confirm* |
-| S3 | Schonhaut L, Armijo I, Schönstedt M, Alvarez J, Cordero M. *Validity of the Ages and Stages Questionnaires in term and preterm infants.* Pediatrics. 2013;131(5):e1468-74. DOI 10.1542/peds.2012-3313. | Validation study, n=306 | Confirmed |
-| S4 | *A parent-completed developmental questionnaire: follow up of ex-premature infants.* J Paediatr Child Health. 2001;37(2):125-9. DOI 10.1046/j.1440-1754.2001.00604.x | Validation study, n=136 | Title, journal, DOI confirmed; author list *to confirm* |
-| S5 | Toh TH, Lim YM-F, Lee JS-Y, Chan W-N, Low Z-Y, Dahian K, Chew S-C, Sivasampu S, Law WK-B, Amar-Singh HSS. *Case-control accuracy study for TOY8 digital developmental screening tool for detecting delays among children aged 3-5 years.* Frontiers in Pediatrics. 2025;13. DOI 10.3389/fped.2025.1706162. | Case-control accuracy study, n=127 | Confirmed (first author and author list read from the article page) |
-| S6 | Wo SW, Alagappar PN, Yahya AN, et al. *Validation of the English version of the TOY8 developmental screening tool: examining measurement invariance across languages, gender and income groups.* BMC Psychology. 2025;13:214. DOI 10.1186/s40359-025-02489-3. | Psychometric validation | Title, journal, article number and DOI confirmed; full author list *to confirm* |
-| S7 | Anjum N, Hasan MM, Jahan N, Ahamed SI, Garefino A, Sakib N. *Early Digital Engagement Among Younger Children and the Transformation of Parenting in the Digital Age From an mHealth Perspective: Scoping Review.* JMIR Pediatrics and Parenting. 2025;8:e60355. DOI 10.2196/60355. | Scoping review, 36 included articles | Confirmed |
-| S8 | Kustiawan TC, Nadhiroh SR, Ramli R, Butryee C. *Use of mobile app to monitoring growth outcome of children: A systematic literature review.* Digital Health. 2022;8. DOI 10.1177/20552076221138641. | Systematic literature review, 12 studies | Confirmed |
-| S9 | Ferraiolo DF, Sandhu R, Gavrila S, Kuhn DR, Chandramouli R. *Proposed NIST Standard for Role-Based Access Control.* ACM Transactions on Information and System Security. 2001;4(3). | Standard proposal with reference model | Authors and journal confirmed; page range *to confirm* |
+## 3.2 Scientific publications (12)
 
-## 3.3 Standards, guidelines and legal sources (10 sources)
-
-| ID | Source | Use in this project |
+| ID | Citation | Type |
 |---|---|---|
-| N1 | CDC, *Learn the Signs. Act Early.* Developmental milestone checklists, https://cdc.gov/act-early/families/milestones-matter.html | Reference for which milestones parents are asked about; not a source of norms in version 1 |
-| N2 | OWASP, *Password Storage Cheat Sheet*, https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html | Argon2id parameters (m = 19 MiB, t = 2, p = 1) for password hashing |
-| N3 | IETF, *RFC 8725: JSON Web Token Best Current Practices*, https://www.rfc-editor.org/rfc/rfc8725 | Explicit algorithm validation, short token lifetime, no sensitive data in tokens |
-| N4 | NIST, *SP 800-63B Digital Identity Guidelines*, https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-63b.pdf | Password policy: length-based rules and no forced composition rules. Section reference *to confirm* by the students |
-| N5 | GDPR, Article 8 (conditions for a child's consent), https://gdpr-text.com/read/article-8/ | Reference model for consent. The age threshold is 16 with parental consent below it (member states may set 13 to 16). Applied by analogy; the project is not subject to the GDPR |
-| N6 | Law of the Republic of Kazakhstan No. 94-V (2013), *On personal data and their protection*, https://adilet.zan.kz/rus/docs/Z1300000094/z13094.htm | Applicable national framework for personal data. The article numbers for consent and special categories of data *to confirm* on the official text |
-| N7 | MDN, *Making PWAs installable*, https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/Making_PWAs_Installable | Installability criteria for the web client: manifest with name, icons (192 and 512 px), start URL and display mode; HTTPS |
-| N8 | Fiber documentation, *JWT middleware*, https://docs.gofiber.io/contrib/jwt | Token extraction from the Authorization header or a cookie, and key configuration |
-| N9 | Go Blog, *Routing enhancements for Go 1.22*, https://go.dev/blog/routing-enhancements | Method-aware routing in the standard library, considered as an alternative in document 05 |
-| N10 | gRPC project, *gRPC-Web protocol*, https://github.com/grpc/grpc/blob/master/doc/PROTOCOL-WEB.md | Browsers do not expose HTTP/2 framing, so native gRPC cannot be called from the web client without a proxy |
+| S1 | J. M. Zubler *et al.*, "Evidence-informed milestones for developmental surveillance tools," *Pediatrics*, vol. 149, no. 3, e2021052138, 2022, doi: [10.1542/peds.2021-052138](https://doi.org/10.1542/peds.2021-052138) | Expert working group, revision of CDC checklists |
+| S2 | WHO Multicentre Growth Reference Study Group (R. Martorell *et al.*), "WHO Motor Development Study: Windows of achievement for six gross motor development milestones," *Acta Paediatrica*, Suppl. 450, pp. 86–95, 2006, doi: [10.1111/j.1651-2227.2006.tb02379.x](https://doi.org/10.1111/j.1651-2227.2006.tb02379.x) | Multicentre longitudinal study |
+| S3 | P. H. Lipkin and M. M. Macias, AAP Council on Children With Disabilities, "Promoting optimal development: Identifying infants and young children with developmental disorders through developmental surveillance and screening," *Pediatrics*, vol. 145, no. 1, e20193449, 2020, doi: [10.1542/peds.2019-3449](https://doi.org/10.1542/peds.2019-3449) | Clinical report |
+| S4 | A. Federico, D. Shi, and J. Bradshaw, "Agreement between parental report and clinician observation of infant developmental skills," *Frontiers in Psychology*, vol. 12, 734341, 2021, doi: [10.3389/fpsyg.2021.734341](https://doi.org/10.3389/fpsyg.2021.734341) | Observational study |
+| S5 | A. Ben-Sasson, K. Jacobs, and E. Ben-Sasson, "The feasibility of a crowd-based early developmental milestone tracking application," *PLOS ONE*, vol. 17, no. 5, e0268548, 2022, doi: [10.1371/journal.pone.0268548](https://doi.org/10.1371/journal.pone.0268548) | Analysis of app data, 3,832 children |
+| S6 | T. H. Toh *et al.*, "Case-control accuracy study for TOY8 digital developmental screening tool for detecting delays among children aged 3–5 years," *Frontiers in Pediatrics*, vol. 13, 1706162, 2025, doi: [10.3389/fped.2025.1706162](https://doi.org/10.3389/fped.2025.1706162) | Case-control accuracy study, 127 children |
+| S7 | T. C. Kustiawan, S. R. Nadhiroh, R. Ramli, and C. Butryee, "Use of mobile app to monitoring growth outcome of children: A systematic literature review," *Digital Health*, vol. 8, 2022, doi: [10.1177/20552076221138641](https://doi.org/10.1177/20552076221138641) | Systematic review, 12 studies |
+| S8 | A. S. Irawan *et al.*, "Beyond the interface: Benchmarking pediatric mobile health applications for monitoring child growth using the Mobile App Rating Scale," *Frontiers in Digital Health*, vol. 7, 1621293, 2025, doi: [10.3389/fdgth.2025.1621293](https://doi.org/10.3389/fdgth.2025.1621293) | Cross-sectional app evaluation, 9 apps |
+| S9 | A. DeWitt, J. Kientz, and K. Liljenquist, "Quality of mobile apps for child development support: Search in app stores and content analysis," *JMIR Pediatrics and Parenting*, vol. 5, no. 4, e38793, 2022, doi: [10.2196/38793](https://doi.org/10.2196/38793) | App store search and content analysis |
+| S10 | N. Anjum, M. M. Hasan, N. Jahan, S. I. Ahamed, A. Garefino, and N. Sakib, "Early digital engagement among younger children and the transformation of parenting in the digital age from an mHealth perspective: Scoping review," *JMIR Pediatrics and Parenting*, vol. 8, e60355, 2025, doi: [10.2196/60355](https://doi.org/10.2196/60355) | Scoping review, 36 articles |
+| S11 | P. Kitsao-Wekulo, N. K. Langat, M. Nampijja, E. Mwaniki, K. Okelo, and E. Kimani-Murage, "Development and feasibility testing of a mobile phone application to track children's developmental progression," *PLOS ONE*, vol. 16, no. 7, e0254621, 2021, doi: [10.1371/journal.pone.0254621](https://doi.org/10.1371/journal.pone.0254621) | Feasibility study, 102 caregiver-child dyads |
+| S12 | M. Gruber, C. Höfig, M. Golla, T. Urban, and M. Große-Kampmann, "'We may share the number of diaper changes': A privacy and security analysis of mobile child care applications," *Proceedings on Privacy Enhancing Technologies*, vol. 2022, no. 3, pp. 394–414, 2022, [link](https://petsymposium.org/popets/2022/popets-2022-0078.php) | Security and privacy analysis, 42 apps |
 
-**Totals:** 19 sources, of which 9 are scientific publications. The requirement (at least 12 meaningfully used sources, at least 8 scientific) is met. Each source is used in the analysis below.
+## 3.3 Standards, official documents and legal acts (14)
+
+| ID | Source | Link | Use in the project |
+|---|---|---|---|
+| R1 | WHO, *WHO Child Growth Standards: Length/height-for-age, weight-for-age, weight-for-length, weight-for-height and body mass index-for-age: Methods and development*, Geneva, 2006 | [who.int](https://www.who.int/publications/i/item/924154693X) | Growth reference, LMS method |
+| R2 | WHO, Child growth standards: indicators and tables | [who.int](https://www.who.int/tools/child-growth-standards/standards) | Indicators, tables by sex and age |
+| R3 | WHO, Motor development milestones | [who.int](https://www.who.int/tools/child-growth-standards/standards/motor-development-milestones) | Windows for six gross motor milestones |
+| R4 | WHO, Child growth standards software and the R package `anthro` | [who.int](https://www.who.int/tools/child-growth-standards/software), [GitHub](https://github.com/WorldHealthOrganization/anthro) | Reference algorithm and test oracle (ADR-006) |
+| R5 | WHO and UNICEF (TEAM), *Recommendations for data collection, analysis and reporting on anthropometric indicators in children under 5 years old*, 2019 | [who.int](https://www.who.int/publications/i/item/9789241515559) | Measurement practice, implausible values |
+| R6 | United Nations, SDG indicator 2.2.1 metadata (stunting, −2 SD of the WHO median) | [unstats.un.org](https://unstats.un.org/sdgs/metadata/files/Metadata-02-02-01.pdf) | Basis of the ±2 SD threshold |
+| R7 | CDC, *Learn the Signs. Act Early.* milestone checklists (2022 revision) | [cdc.gov](https://www.cdc.gov/act-early/milestones/index.html) | Milestone items, 2 months to 5 years |
+| R8 | CDC, Milestone Tracker app | [cdc.gov](https://www.cdc.gov/act-early/milestones-app/index.html) | Existing system E1 (document 04) |
+| R9 | WHO, UNICEF and World Bank Group, *Nurturing care for early childhood development: A framework*, 2018 | [who.int](https://www.who.int/publications/i/item/9789241514064) | Role of families and services in early development |
+| R10 | Ministry of Health of the Republic of Kazakhstan, Order No. 704 "On approval of the rules for organizing screening," 9 September 2010, with amendments | [adilet.zan.kz](https://adilet.zan.kz/rus/docs/V1000006490) | Development screening in polyclinics (finding F2) |
+| R11 | Ministry of Health of the Republic of Kazakhstan, Order No. ҚР ДСМ-264/2020 on the rules, scope and frequency of preventive medical examinations of target groups, 15 December 2020, with amendments | [adilet.zan.kz](https://adilet.zan.kz/rus/docs/V2000021820) | Examination ages, reminders (finding F1) |
+| R12 | Ministry of Health of the Republic of Kazakhstan, Order No. ҚР ДСМ-25 "On approval of the standard for organizing pediatric care in the Republic of Kazakhstan," 15 March 2022, with amendments | [adilet.zan.kz](https://adilet.zan.kz/rus/docs/V2200027182) | Organization of pediatric care (finding F3) |
+| R13 | Republic of Kazakhstan, Law No. 94-V "On personal data and their protection," 21 May 2013, with amendments | [adilet.zan.kz](https://adilet.zan.kz/rus/docs/Z1300000094) | Consent, storage in Kazakhstan, protection duties |
+| R14 | UNICEF Kazakhstan, Early childhood development | [unicef.org](https://www.unicef.org/kazakhstan/en/early-childhood-development) | Patronage nurse model (finding F6) |
+
+**Totals:** 26 sources, 12 scientific publications and 14 official documents.
 
 ## 3.4 Critical analysis
 
-### Approaches to monitoring development
+### References for growth and development
 
-Clinical practice relies on two complementary mechanisms. S1 recommends **developmental surveillance** (asking about milestones and observing the child at every health visit) and **standardized screening** at defined ages, so that concerns are identified early. Surveillance is continuous but informal; screening is structured but occasional. Read together, the two mechanisms suggest that a single snapshot is weaker than repeated observation. This supports a design in which parents and specialists record observations over time rather than rely on a one-off assessment. The students must check the exact wording of S1 in the full text before quoting it.
+The WHO Child Growth Standards (R1, R2) describe how healthy children grow under recommended conditions, by sex, from birth to five years, and are distributed with WHO's own software (R4). Their age range matches the age range of the project. The −2 SD line is the internationally used threshold for stunting and underweight (R6), so the ±2 SD threshold of signal G1 has an external basis. However, R5 is aimed at surveys of populations, not at the follow-up of one child, and a single value outside ±2 SD does not establish that something is wrong with an individual child. The system therefore treats such a value as a reason to talk to a specialist.
 
-The ASQ family of parent-completed questionnaires is the most studied tool of this kind. The accuracy figures show a clear trade-off:
+For milestones, S1 revised the CDC checklists so that each item is a skill shown by at least 75% of children at that age (earlier lists used the 50th percentile), and published them as free checklists (R7). The 75% rule means that a `not_yet` answer at the checklist age is already unusual, which justifies signal M1, but S1 explicitly presents the checklists as a tool for surveillance and conversation, not as a screening instrument. S2 gives windows of achievement for six gross motor milestones; its finding that some healthy children never crawl is the reason crawling is excluded from signal W1. S3 recommends developmental surveillance at every visit together with standardized screening at fixed ages, which supports a dated record over time instead of a single check.
 
-- In ex-premature infants (S4, n=136), the ASQ reached 90% sensitivity and 77% specificity, but only 40% positive predictive value. Most positive screens were false alarms.
-- In a Chilean cohort of term and preterm children (S3, n=306), ASQ-3 reached 75% sensitivity and 81% specificity, with modest agreement with the Bayley-III (r = 0.56). Accuracy improved with age.
+### Reliability of parent reports and digital screening
 
-**Implication for design.** A screening result from a parent questionnaire is not reliable enough to label a child. The system therefore records observations and makes their dynamics visible, but does not produce risk scores or diagnoses. Any interpretation is left to a specialist.
+S4 reports that parents' reports agree with clinicians' observation better for motor skills than for language and social communication. The design therefore stores parent and specialist answers separately and shows the source of each. S5 analyzed milestone diaries of 3,832 children in a crowd-based app: parents tracked milestones across the main domains on their own, but parent-authored speech milestones were placed about seven months later than CDC speech milestones. This supports offering fixed checklist items rather than free-text milestones only. S6 evaluated the TOY8 digital screening tool in 127 children aged 3 to 5 years and reported sensitivity of 0.77 to 0.84 and specificity of 0.65 to 0.67, with a sample from one region. Accuracy of this level does not justify labelling an individual child, which is the main reason for excluding diagnosis and risk scores from the scope.
 
-### Digital screening tools
+### Apps for parents
 
-S5 evaluated the TOY8 digital developmental screening tool in a case-control design against the Griffiths III scale (n=127, children aged 3-5 years). Sensitivity was 0.77 for any mild-to-moderate delay and 0.84 for severe delay; specificity was 0.67 and 0.65. S6 confirmed measurement invariance across language, gender and income groups for the English version. The authors of S5 note that the sample came from one region and that sensitivity was low for gross motor and personal-adaptive subscales.
+S7 reviewed 12 studies of mobile apps for growth monitoring and found improvements in some settings, with limited evidence quality. S8 rated nine pediatric growth apps in Indonesia with the Mobile App Rating Scale: functionality and appearance scored high, while engagement and information quality varied, and only a third of the apps offered feedback or personalized guidance. S9 analyzed child development apps in US app stores and found that most give generic guidance and are not adapted to families' language and culture. S10 reports that parents see digital tools as useful but lack the time to apply recommendations. S11 tested, in an informal settlement in Nairobi, monthly age-specific milestone questions sent to caregivers' phones for children aged 6 to 24 months; a "no" answer flagged the child for a home visit by a community health volunteer. Response rates were above 90% in the first three months and then between about 75% and 86%, and shared phones limited access for some caregivers. The study shows that parent-reported milestones can be collected regularly by phone and linked to a professional's follow-up, which is the pattern of this project (milestone answers, signal, conversation with a specialist); it also shows that participation drops over time, so reminders matter. Taken together, these sources show that tracking apps are common, but their content basis and adaptation vary. For this project this means: reference content with a named source (R1, R7), translations reviewed for meaning (A8) and quick data entry.
 
-**Implication for design.** Digital screening is feasible and increasingly validated, but accuracy for individual children remains moderate and sample-dependent. This is a further reason not to build automatic classification into version 1. A future module could import validated screening results, labeled as such, without implying diagnostic accuracy.
+### Privacy of child-related apps
 
-### Parents and mobile health tools
+S12 analyzed 42 Android child care apps and their cloud back ends and found third-party tracking and security weaknesses that exposed personal data about children. R13 requires consent of the data subject or the legal representative and storage of personal data on the territory of Kazakhstan. This is why the project records consent at registration, keeps the data set minimal, has no third-party trackers in the client (NFR-PRV-04) and plans a server located in Kazakhstan.
 
-S7 is a scoping review of 36 articles on parents' early digital engagement and mHealth. It reports that parents often see digital tools as beneficial but cite a lack of tools and time to apply recommended interventions, and it proposes an app with tracking, parental guidance and activity suggestions. The implication for this project is that a record-keeping tool must be fast to use, because parents' time is the limiting factor.
+### Kazakhstan context
 
-S8 is a systematic review of 12 studies of mobile apps for growth monitoring. It reports improved growth outcomes in some settings and calls for larger, longer studies. The quality evidence is therefore limited. The implication is that apps are promising for tracking change over time, which is exactly the design choice of a dated observation history.
-
-### Access control and security
-
-S9 standardizes role-based access control (RBAC) with core roles, role hierarchies and separation-of-duty constraints. The project uses two roles (parent, specialist), which map to core RBAC. Access to a specific child, however, depends on an ownership relationship and an explicit grant. That is an object-level relationship, which the standard does not model directly. The project therefore combines RBAC roles with per-child grants and enforces both in one service layer. This is a deliberate extension and is documented as such in document 06.
-
-For tokens, N3 recommends explicit algorithm validation (rejecting `none` and unexpected algorithms), short lifetimes and no sensitive data in claims. N8 shows the standard middleware pattern used in Fiber. For passwords, N2 recommends Argon2id as the first choice, with bcrypt only for legacy systems; the project uses Argon2id with the OWASP parameters. N4 supports a minimum length rule for user-chosen passwords without forced composition rules.
-
-For legal framing, N5 sets the reference model for consent: below a threshold age the parent gives consent. Here the parent is the account holder and the person who consents, which fits the model. N6 is the applicable national law; the students must verify its consent and special-category provisions in the official text. Records of development are treated as sensitive, and the project never uses real children's data.
+R11 sets the ages of preventive examinations, at which weight, height and head circumference are measured; the reminders of the system follow these ages. R10 describes development screening in polyclinics with parent questionnaires and a nurse's assessment, and refers to national scales of neuropsychic development, which are an alternative reference (document 05, decision 7). R12 organizes pediatric care around the polyclinic. R14 describes the patronage nurse model that follows families until the child is five. R9 sets the international framework in which families and services share responsibility for early development. None of these sources describes a record kept by the family itself, which is the gap the project addresses (document 02).
 
 ### Limitations of the evidence
 
-- The sources are heterogeneous: clinical reports, small validation studies and reviews of apps of varying quality.
-- Most accuracy figures come from settings outside Kazakhstan. They do not transfer directly to local populations.
-- The commercial product sources (document 04) are vendor and store listings. They describe features, not verified performance.
-- The search was not systematic. A reader should treat this review as a foundation and an overview, not a complete map of the field.
+- The accuracy figures and app studies come from countries other than Kazakhstan.
+- App studies (S5, S7, S8, S9) evaluate content and use, not effects on children.
+- The CDC checklists were written for the United States; translation can change the meaning of an item.
+- The search was not systematic; the review is a foundation for design decisions, not a complete map of the field.
 
 ## 3.5 Analysis table
 
 | ID | Year | Topic | Key result or statement | Consequence for the project |
 |---|---|---|---|---|
-| S1 | 2020 | Surveillance and screening | Surveillance at health visits plus standardized screening at defined ages | Record observations over time; no one-off labels |
-| S2 | 2017 | Early development as a life-course issue | Early childhood development shapes later outcomes; the paper calls for science-based, life-course monitoring | Motivation and age range 0 to 5 |
-| S3 | 2013 | ASQ-3 validity | Sensitivity 75%, specificity 81%, modest agreement with Bayley-III | Parent questionnaires are not reliable enough to diagnose |
-| S4 | 2001 | ASQ in ex-premature infants | Sensitivity 90%, specificity 77%, PPV 40% | High false-positive rate; no automatic risk flags |
-| S5 | 2025 | Digital screening accuracy (TOY8) | Sensitivity 0.77 to 0.84, specificity 0.65 to 0.67; weaker in some subscales | Digital tools need caution; future import only with labels |
-| S6 | 2025 | Measurement invariance (TOY8 English version) | Invariance across language, gender and income groups reported | Validation across subgroups is needed before any clinical use |
-| S7 | 2025 | Parents and mHealth | Parents cite lack of tools and time | Fast data entry and simple screens |
-| S8 | 2022 | Growth monitoring apps | Improvements in some settings; evidence quality limited | Dated history is the core feature |
-| S9 | 2001 | RBAC standard | Core roles and separation-of-duty constraints | Two roles plus per-child grants (documented extension) |
-| N1 | current | CDC milestones | Age-based milestone checklists | Reference for milestone content |
-| N2 | current | Password storage | Argon2id first, parameters given | Implemented in the auth module |
-| N3 | 2020 | JWT best practice | Explicit alg, short lifetimes | Implemented in the token module |
-| N4 | current | Digital identity | Password length rules, no forced composition | Password policy FR-AUTH-02 |
-| N5 | 2016 | GDPR Article 8 | Age 16 threshold; parental consent below | Consent model by analogy |
-| N6 | 2013 | Kazakhstan personal data law | Applicable framework for personal data | Compliance checklist in document 09 |
-| N7 | current | PWA installability | Manifest, icons, HTTPS | Client requirements in document 08 |
-| N8 | current | Fiber JWT middleware | Token extraction and key configuration | Used with a custom claims check |
-| N9 | 2024 | Go routing | Method-aware patterns in the standard library | Alternative in document 05 |
-| N10 | current | gRPC-Web | Browsers cannot expose HTTP/2 framing | Reason for REST over gRPC for the web client |
+| S1 | 2022 | CDC milestone revision | Items reached by at least 75% of children; 159 items in four domains | Milestone catalog; signal M1 |
+| S2 | 2006 | WHO motor windows | Windows for six gross motor milestones; some children never crawl | Signal W1 without crawling |
+| S3 | 2020 | Surveillance and screening | Surveillance at every visit plus screening at fixed ages | Dated record over time |
+| S4 | 2021 | Parent report | Better agreement for motor than for language and social skills | Source of every answer shown |
+| S5 | 2022 | Crowd-based milestone app | Parents track milestones; speech milestones placed later than CDC | Fixed checklist items |
+| S6 | 2025 | Digital screening accuracy | Sensitivity 0.77–0.84, specificity 0.65–0.67 | No diagnosis or risk score |
+| S7 | 2022 | Growth monitoring apps | Some improvements; limited evidence | Dated history as core feature |
+| S8 | 2025 | Growth app quality | Good functionality; weak feedback and information quality | Reference source on every chart |
+| S9 | 2022 | Development app content | Mostly generic guidance, little cultural adaptation | Reviewed Russian and Kazakh texts |
+| S10 | 2025 | Parents and mHealth | Parents lack time | Fast entry, simple screens |
+| S11 | 2021 | Phone-based milestone tracking | Regular caregiver answers feasible; a "no" answer leads to a follow-up visit; response falls over time | Signals that lead to a specialist; reminders |
+| S12 | 2022 | Child care app privacy | Trackers and weaknesses in 42 apps | No trackers; minimal data |
+| R1, R2 | 2006 | WHO growth standards | Sex-specific references 0–5 years | Z-scores and percentiles |
+| R3 | 2006 | WHO motor milestones | Windows of achievement | Signal W1 |
+| R4 | current | WHO software | Reference implementation | Test oracle for metric M8 |
+| R5 | 2019 | Anthropometric data | Measurement and plausibility rules | Signal G2, input limits |
+| R6 | current | SDG 2.2.1 | −2 SD threshold | ±2 SD in signal G1 |
+| R7 | 2022 | CDC checklists | Free checklists 2 months to 5 years | Item texts |
+| R8 | current | CDC Milestone Tracker | Public app based on R7 | System E1 |
+| R9 | 2018 | Nurturing care | Families and services share responsibility | Parent-owned record with specialists |
+| R10 | 2010 | Order No. 704 | Development screening in polyclinics | Context; alternative scales |
+| R11 | 2020 | Order ҚР ДСМ-264/2020 | Examination ages | Reminders |
+| R12 | 2022 | Order ҚР ДСМ-25 | Pediatric care organization | Context |
+| R13 | 2013 | Law No. 94-V | Consent, storage in Kazakhstan | Consent recording, hosting |
+| R14 | current | UNICEF Kazakhstan | Patronage nurses until age five | Specialist role |
 
 ## 3.6 Gaps and how the project responds
 
-1. **No tool in the reviewed sources combines** parent-recorded observations, per-child access for professionals and dated history in one system for children aged 0 to 5. Document 04 confirms this gap for the commercial products.
-2. **Accuracy is moderate** for every screening tool reviewed. The project does not claim diagnostic accuracy and labels its output as records.
-3. **Evidence on parent-facing apps is limited** (S7, S8). The project will evaluate usability and access correctness with a small study (document 09) rather than claim clinical benefit.
+1. **No source describes a family-owned record** that combines WHO growth references, evidence-informed milestones and notes from specialists chosen by the parent. Document 04 shows the same gap for existing systems. The project builds this record.
+2. **Accuracy for individual children is moderate** (S4, S6). The project does not diagnose and words signals as suggestions to talk to a specialist.
+3. **App content is often generic and not adapted** (S8, S9). The project names the source of every item and reviews the translations.
+4. **Child-related apps leak data** (S12). The project keeps the data minimal, has no trackers and records consent.
+5. **Local evidence is missing.** The interviews (document 02) and the usability study (document 09) provide local qualitative evidence; they do not replace clinical studies.
 
-## Appendix A. Search queries used
+## 3.7 Open checks
 
-- Lipkin Macias 2020 Pediatrics developmental surveillance and screening clinical report
-- Ages and Stages Questionnaire parent-completed validity sensitivity specificity
-- mobile app child development monitoring parents systematic review
-- Black 2017 Lancet early childhood development coming of age series
-- digital developmental screening tool parents smartphone validation children 0-5
-- TOY8 digital developmental screening tool case-control accuracy
-- Use of mobile app to monitoring growth outcome of children systematic review
-- Early Digital Engagement Among Younger Children scoping review mHealth
-- Ferraiolo Kuhn 1992 role-based access control NIST model
-- Password storage OWASP cheat sheet; NIST SP 800-63B; RFC 8725
-- GDPR Article 8 conditions for children's consent
-- Kazakhstan Law 94-V personal data
-- gRPC-Web browser limitations; Go 1.22 ServeMux routing; TimescaleDB documentation
+- R10, R11, R12: the current revision of each order is to be read before the final submission, because the annexes have been amended.
+- The examination ages used for reminders (document 00, 0.6, and ADR-005: 1, 5, 6, 9, 12, 15, 18, 21, 24 and 30 months, 3, 4 and 5 years) are to be compared with the current Annex 1 of R11; in particular, the consecutive ages of 5 and 6 months need checking.
