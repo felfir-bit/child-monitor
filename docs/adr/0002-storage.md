@@ -17,6 +17,6 @@ Use PostgreSQL 16 with `TIMESTAMPTZ` timestamps, foreign keys with cascade rules
 
 ## Consequences
 
-Schema changes are versioned SQL files in `src/migrations/`. Time-series performance is not optimized in version 1; the data volume of the evaluation does not require it.
+Schema changes will be versioned SQL files in `src/migrations/`, starting at milestone M2. Time-series performance is not optimized in version 1; the data volume of the evaluation does not require it.
 
 See document 05, section 5.3.

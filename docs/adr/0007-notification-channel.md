@@ -8,7 +8,7 @@ Document 00, section 0.6 lists four events that notify a parent or a specialist:
 
 ## Decision
 
-Version 1 delivers notifications in the app only. NotificationService stores one row per recipient in `notifications`, and the client reads `GET /api/v1/me/notifications` (unread first) and marks them read. A unique key per recipient and event makes the periodic reminder job safe to repeat. Texts are rendered when read, in the language the client asks for.
+Version 1 delivers notifications in the app only. The planned NotificationService will store one row per recipient in `notifications`, and the client will read `GET /api/v1/me/notifications` (unread first) and mark them read. A unique key per recipient and event makes the periodic reminder job safe to repeat. Texts will be rendered when read, in the language the client asks for.
 
 ## Alternatives
 
