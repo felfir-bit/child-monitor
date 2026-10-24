@@ -1,6 +1,6 @@
 # 5. Technology Comparison
 
-This document compares the alternatives for eight key decisions. Each decision lists two or three reasonable options, the criteria, the choice and the reason. The decisions are recorded as ADRs in `docs/adr/` (ADR-001 to ADR-006; decision 5 is part of ADR-003). Technical references T1 to T8 are listed in section 5.11; S and R identifiers refer to document 03.
+This document compares the alternatives for eight key decisions. Each decision lists two or three reasonable options, the criteria, the choice and the reason. Decisions 1, 2, 4, 6, 7 and 8 are recorded as ADR-001 to ADR-006 in `docs/adr/`; decision 5 is part of ADR-003; decision 3 (REST) is recorded only in this document. ADR-007 records the notification channel, which follows from decision 6. Technical references T1 to T8 are listed in section 5.11; S and R identifiers refer to document 03.
 
 ## 5.1 Criteria
 
@@ -50,7 +50,7 @@ Derived from the requirements in document 06:
 
 | Option | Summary | Assessment |
 |---|---|---|
-| **A. Stateless JWT (HS256) with short lifetime** (chosen) | Signed access token in the `Authorization: Bearer` header. | RFC 8725 requires the caller to fix the accepted algorithms and advises against accepting `none` (T2); both are implemented. **Trade-off:** no revocation before expiry without extra state; mitigated by a one-hour lifetime and by checking grants on every request. |
+| **A. Stateless JWT (HS256) with short lifetime** (chosen) | Signed access token in the `Authorization: Bearer` header. | RFC 8725 requires the caller to fix the accepted algorithms and advises against accepting `none` (T2); the planned token module will do both. **Trade-off:** no revocation before expiry without extra state; mitigated by a one-hour lifetime and by checking grants on every request. |
 | B. Server-side sessions with an opaque cookie | Session identifier in an HTTP-only cookie, state in the database. | Immediate revocation; needs session storage and CSRF protection. Fiber's JWT middleware can also read tokens from a cookie (T7). |
 | C. OAuth 2.0 / OpenID Connect with an external provider | Delegated login. | Adds a provider dependency that specialists may not have. Out of scope for version 1. |
 
@@ -66,7 +66,7 @@ Derived from the requirements in document 06:
 
 **Choice: A (Argon2id).**
 
-**Password policy.** NIST SP 800-63B-4 (July 2025, T3) requires a minimum of 15 characters for passwords used as a single authentication factor (8 characters only when the password is part of multi-factor authentication), recommends allowing at least 64 characters, and forbids composition rules. The current implementation accepts 8 to 72 bytes, a limit inherited from bcrypt that Argon2id does not have, and counts bytes, so a Cyrillic password is cut at 36 characters. **Decision:** change the rule to 15 to 128 characters, counted as Unicode characters (FR-AUTH-02, task DIP-24).
+**Password policy.** NIST SP 800-63B-4 (July 2025, T3) requires a minimum of 15 characters for passwords used as a single authentication factor (8 characters only when the password is part of multi-factor authentication), recommends allowing at least 64 characters, and forbids composition rules. A limit of 72 bytes, common in older designs, comes from bcrypt and does not apply to Argon2id; counting bytes would also shorten Cyrillic passwords. **Decision:** passwords of 15 to 128 characters, counted as Unicode characters, with no composition rules (FR-AUTH-02).
 
 ## 5.7 Decision 6: Client application
 

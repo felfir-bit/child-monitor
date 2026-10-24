@@ -17,6 +17,6 @@ Use Go with the Fiber v2 framework.
 
 ## Consequences
 
-Fiber is built on fasthttp. Libraries that expect `http.Handler` need an adaptor, which the metrics endpoint uses. If the adaptor becomes a problem, the standard library is the fallback.
+Fiber is built on fasthttp. Libraries that expect `http.Handler` need an adaptor, which the planned metrics endpoint will use. If the adaptor becomes a problem, the standard library is the fallback.
 
 See document 05, section 5.2.
