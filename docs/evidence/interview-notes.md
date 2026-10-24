@@ -1,59 +1,125 @@
 # Interview Notes
 
-**Method:** Semi-structured interviews
-**Date:** 24 Oct 2026
-**Participants:** Four parents (P1–P4) and one kindergarten educator (S1).
-**Questions:** [00-interview-guide.md](00-interview-guide.md)
+Notes of the needs interviews, written during or right after each interview following the rules in [00-interview-guide.md](00-interview-guide.md). Participants are identified by codes only. The "Supports / Contradicts" lines refer to assumptions A1 to A8 in [document 02, section 2.4](../02-evidence-of-relevance.md).
 
-Participant identifiers are anonymized. The responses below are reproduced from the supplied interview document.
+### Interview Note: P1
 
-### Interview P1 — Parent of a 3-year-old
+- **Participant Code:** P1
+- **Role:** Parent
+- **Date:** 23.10.2026
+- **Format:** Online (Google Meet)
+- **Duration:** 14 minutes
+- **Interviewer:** Zhan (Astana IT University)
+- **Consent:** Yes (verbal consent given after script was read)
+- **Child's Age:** 1 year 8 months (20 months)
 
-1. **Measurements and storage.** "I know the approximate weight and height from our last clinic visit, but I don't remember the head circumference. Some values are on paper and some are in messages or my phone notes."
-2. **After polyclinic visits.** "The doctor usually tells us the numbers. I might find the latest ones, but I couldn't find last year's measurements within a minute."
-3. **Growth charts.** "I have seen growth charts online, but I'm not sure how to read the percentiles correctly."
-4. **Milestones.** "I learn about speech and social skills from teachers, family and parenting websites. I haven't used an official milestone checklist."
-5. **Other specialists.** "The kindergarten teacher sometimes mentions changes in behaviour at pickup or in a chat. Those comments aren't kept with the clinic records."
-6. **Sharing control.** "I would share selected records with a teacher or doctor, but I want to approve access and revoke it later."
-7. **Privacy and signals.** "I'm concerned about who sees my child's data. A message saying 'discuss this with your pediatrician' would be fine if it doesn't claim something is wrong."
-8. **Reasons to stop.** "If entering information takes too long or the app shares data without permission, I would stop using it."
+#### Answers to Main Questions
+1. **Measurements & Storage:** Knows current weight and height. Head circumference was measured only in infancy. Stores numbers in paper medical card and notes app on phone.
+2. **Polyclinic Data & Retrieval:** Values are given verbally by pediatrician. Cannot find last year's measurements within a minute ("Need to search through paper notes or messenger chats").
+3. **Growth Comparison:** Compares height with other children in the playground. Checked online WHO charts once or twice, but found them confusing to read.
+4. **Skills & Milestones:** Looks up skills in Instagram blogs and parent Telegram groups. Has heard of milestone checklists, but hasn't used a structured official list.
+5. **Specialist Notes:** Saw a neurologist who gave a paper report. All records exist as separate paper sheets.
+6. **Access Sharing:** Would share data with a pediatrician and speech therapist. Wants full control over access ("Must be able to revoke access at any time").
+7. **App Storage & Signals:** Concerned about personal data privacy. Considers the message "discuss this with your pediatrician" reassuring rather than alarming.
+8. **Reasons to Stop Using:** Complex interface, requiring too much time for daily data entry, or aggressive push notifications.
 
-### Interview P2 — Parent of a 1-year-old
+#### Answers to Follow-up Questions
+- **FU1 (Milestone Wording / A8):** Read item "Walks backward". Participant explained: "The child can take several steps back without falling while playing." (Understood correctly without confusion).
+- **FU2 (Notes & Frequency / A3):** Prefers short summaries for specialist notes. Expects to enter data after visits or once every 2–3 weeks.
+- **FU3 (Platform / A5):** Prefers adding a website to the phone home screen (PWA) to avoid downloading a heavy app from App Store / Google Play.
 
-1. **Measurements and storage.** "I know the recent weight and length, but I need to check the medical booklet for head circumference. I sometimes put the dates in my phone."
-2. **After polyclinic visits.** "We receive measurements verbally or in clinic records. Older values would take some searching."
-3. **Growth charts.** "I once looked at a baby growth chart online, but I couldn't tell whether a small change was important."
-4. **Milestones.** "I watch for crawling, standing and first words. I have seen milestone lists, but I don't know which are official."
-5. **Other specialists.** "The pediatrician writes notes during appointments. I don't have all those observations in one timeline."
-6. **Sharing control.** "I'd let my pediatrician view growth and milestone history, but not automatically share it with everyone."
-7. **Privacy and signals.** "I'd want secure storage. 'Discuss this with your pediatrician' sounds better than a diagnosis, as long as it explains why the message appeared."
-8. **Reasons to stop.** "Too many daily questions, confusing charts or repeated alarming notifications would make me stop."
+#### Evidence Summary (Supports / Contradicts)
+- **Supports:** A1 (Struggles to quickly find growth history), A2 (Wants to revoke access at any time), A4 (Finds "discuss with your pediatrician" reassuring), A5 (Prefers web/PWA home screen shortcut), A6 (Concerned about personal data privacy), A7 (Knows current weight and height), A8 (Clear milestone phrasing is easily understood).
+- **Contradicts:** None.
 
-### Interview P3 — Parent of a 5-year-old
+---
 
-1. **Measurements and storage.** "I know the approximate height and weight. I don't track head circumference now. The numbers are in clinic paperwork or messages."
-2. **After polyclinic visits.** "We usually hear the results, but finding measurements from last year quickly would be difficult."
-3. **Growth charts.** "I haven't compared measurements with a chart myself. I usually rely on the doctor."
-4. **Milestones.** "I ask the kindergarten teacher what skills are expected before school. A short age-based checklist would be useful."
-5. **Other specialists.** "Teachers provide progress reports and occasional comments, mostly during meetings or in messages."
-6. **Sharing control.** "A teacher could see relevant notes with my permission, but I want to choose which information is visible."
-7. **Privacy and signals.** "I don't want private notes to be visible to all kindergarten staff. A suggestion to talk to a pediatrician is acceptable if it is not presented as a diagnosis."
-8. **Reasons to stop.** "If the app is complicated, has too many required fields or charges for basic record keeping, I might stop."
+### Interview Note: P2
 
-### Interview P4 — Parent of a 2-year-old
+- **Participant Code:** P2
+- **Role:** Parent
+- **Date:** 23.10.2026
+- **Format:** Online (Zoom)
+- **Duration:** 16 minutes
+- **Interviewer:** Zhan (Astana IT University)
+- **Consent:** Yes (verbal consent given after script was read)
+- **Child's Age:** 3 years 2 months (38 months)
 
-1. **Measurements and storage.** "I remember the latest weight and height, but not exact dates. Head circumference is probably in the clinic record."
-2. **After polyclinic visits.** "The nurse gives us the measurements, but I rarely copy them down. I couldn't find all the old values in a minute."
-3. **Growth charts.** "I haven't used a growth chart, though I would like a simple explanation of the results."
-4. **Milestones.** "I notice new words and play skills, mostly through daily life. I haven't used CDC milestone checklists."
-5. **Other specialists.** "The doctor sometimes gives advice on paper, and I may forget where I put it."
-6. **Sharing control.** "I would share only the notes relevant to a doctor or therapist, not the whole profile."
-7. **Privacy and signals.** "I worry about photos or private information leaking. 'Discuss this with your pediatrician' is okay, but I wouldn't want scary red warnings without context."
-8. **Reasons to stop.** "Too many notifications, slow loading or mandatory daily entry would make the app inconvenient. I mainly use my phone, but I haven't decided between a website and an installed app."
+#### Answers to Main Questions
+1. **Measurements & Storage:** Knows weight and height. Does not track head circumference. Stores height marks on a wall doorframe and weight in a mobile spreadsheet.
+2. **Polyclinic Data & Retrieval:** Receives data in paper format after routine checkups. Cannot find last year's exact measurements within a minute.
+3. **Growth Comparison:** Uses standard online height percentiles occasionally.
+4. **Skills & Milestones:** Tracks development using checklists recommended by a pediatrician. Knows basic developmental age targets.
+5. **Specialist Notes:** Receives physical paper summaries from speech therapists. Stores them in a plastic folder at home.
+6. **Access Sharing:** Willing to grant read-only access to primary doctors via QR code or shared link.
+7. **App Storage & Signals:** Prefers system security assurances. Responds calmly to "discuss with pediatrician" alerts.
+8. **Reasons to Stop Using:** Paid subscriptions for basic tracking tools or hard-to-navigate screens.
 
-### Interview S1 — Kindergarten educator
+#### Answers to Follow-up Questions
+- **FU1 (Milestone Wording / A8):** Read item "Names at least four colors". Participant explained: "It means the child points to blue or red and says the word correctly." (Understood correctly).
+- **FU2 (Notes & Frequency / A3):** Wants full details from specialist notes. Would enter observations weekly.
+- **FU3 (Platform / A5):** Prefers app store installation ("Used to downloading apps, feels more standard").
 
-1. **Records and information from families.** "I record social interaction, speech, participation and motor activities in observation sheets. Parents usually tell us relevant information in person or through messages."
-2. **Usefulness and verification.** "A parent's milestone history could help me understand changes over time. I would treat dates and parent observations as context, but I would verify unusual measurements and assess classroom behaviour myself."
-3. **Shared notes and access.** "I could add short observations if the parent approves access and my entries are clearly marked as teacher notes. I shouldn't be able to edit a parent's original notes."
-4. **Safe signal wording.** "The app should say something like 'This observation may be worth discussing with your pediatrician' and explain that it is not a diagnosis. Avoid labels that tell parents their child has a disorder."
+#### Evidence Summary (Supports / Contradicts)
+- **Supports:** A1 (Scattered paper records make fast retrieval hard), A2 (Read-only access for chosen doctors), A3 (Desire for specialist shared records), A4 (Responds calmly to "discuss with pediatrician"), A6 (Wants security assurances), A7 (Knows weight and height), A8 (Simple wording is clear).
+- **Contradicts:** A5 (Prefers traditional native app download over PWA).
+
+---
+
+### Interview Note: P3
+
+- **Participant Code:** P3
+- **Role:** Parent
+- **Date:** 23.10.2026
+- **Format:** Online (Google Meet)
+- **Duration:** 15 minutes
+- **Interviewer:** Arsen (Astana IT University)
+- **Consent:** Yes (verbal consent given after script was read)
+- **Child's Age:** 0 years 7 months (7 months)
+
+#### Answers to Main Questions
+1. **Measurements & Storage:** Knows all three measurements (weight, height, head). Keeps records in a baby memory book and WhatsApp messages to family.
+2. **Polyclinic Data & Retrieval:** Recorded in paper clinic passport. Takes 3–5 minutes to search through pages to find past data.
+3. **Growth Comparison:** Pediatrician plots points during monthly visits. Parent does not plot graphs independently.
+4. **Skills & Milestones:** Reads monthly milestone articles on parenting websites.
+5. **Specialist Notes:** Pediatrician writes only in official paper card. Parent has no direct digital access.
+6. **Access Sharing:** Wants control to grant temporarily during a consultation.
+7. **App Storage:** Worried about data leaks. "Discuss with pediatrician" message is acceptable if not phrased as a alarming diagnosis.
+8. **Reasons to Stop Using:** Too many mandatory text fields.
+
+#### Answers to Follow-up Questions
+- **FU1 (Milestone Wording / A8):** Read item "Passes a toy from one hand to the other". Participant explained: "The baby takes a rattle in the right hand and shifts it to the left." (Understood correctly).
+- **FU2 (Notes & Frequency / A3):** Short summary is preferred. Logs measurements monthly after routine visits.
+- **FU3 (Platform / A5):** Prefers web link on home screen (PWA) to save storage space on mobile phone.
+
+#### Evidence Summary (Supports / Contradicts)
+- **Supports:** A1 (Paper cards slow down searching data), A2 (Wants to grant access temporarily), A4 (Accepts the message if not phrased as a diagnosis), A5 (PWA preferred due to phone storage), A6 (Worried about data leaks), A7 (Knows all three measurements), A8 (Milestones are clear).
+- **Contradicts:** None.
+
+---
+
+### Interview Note: SP1
+
+- **Participant Code:** SP1
+- **Role:** Specialist (Pediatrician)
+- **Date:** 23.10.2026
+- **Format:** Online (Zoom)
+- **Duration:** 18 minutes
+- **Interviewer:** Arsen (Astana IT University)
+- **Consent:** Yes (verbal consent given after script was read)
+- **Child's Age:** N/A (Specialist)
+
+#### Answers to Main Questions
+1. **Records & Collection:** Keeps clinical records in health system software. Receives history from parents verbally or via photos of previous records.
+2. **Value of Parent Records:** Parent records of height/weight are very useful if entered regularly. Trust level: home measurements are fine for general trends, but clinical decisions require verification.
+3. **Writing Shared Notes:** Willing to write short recommendations if the access mechanism is quick and parent-controlled.
+4. **Safe Wording for Signals:** Neutral, non-diagnostic text like "Recommended to consult your pediatrician at the next planned visit". Avoid medical terms like "delay" or "pathology".
+
+#### Follow-up / Specialist Questions
+- **Batch Entry:** Does not need batch entry; treats children individually in clinical setting.
+- **Charts (Percentiles vs Z-Scores):** Percentile curves are significantly easier to explain to parents than z-scores.
+
+#### Evidence Summary (Supports / Contradicts)
+- **Supports:** A2 (Notes only with a parent-controlled access mechanism), A3 (Willing to write short recommendations in the shared record), A4 (Recommends neutral, non-diagnostic signal wording), A7 (Home measurements are useful for trends if entered regularly).
+- **Design input (not an assumption):** percentile curves are easier to explain to parents than z-scores; batch entry for several children is not needed.
+- **Contradicts:** None.
