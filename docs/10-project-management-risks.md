@@ -6,7 +6,7 @@
 |---|---|
 | Repository | [github.com/felfir-bit/child-monitor](https://github.com/felfir-bit/child-monitor) |
 | Access | Both students and the supervisor; the committee receives access before each pre-defense |
-| Issue tracker | [YouTrack, project DIP](https://child-monitoring.youtrack.cloud) |
+| Issue tracker | [YouTrack, project DIP](https://chil-monitoring-system.youtrack.cloud/projects/DIP) |
 | Default branch | `main`, the reviewed baseline |
 | Submission tags | `pre-defense-1`, `pre-defense-2`, `final-pre-defense`; tags are never moved or replaced |
 
