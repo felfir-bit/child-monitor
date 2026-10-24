@@ -2,42 +2,76 @@
 
 **Development of a Digital System for Monitoring Child Development**
 
-Child Development Monitor is a web system that keeps one structured development record for each child aged 0 to 5. The parent owns the record and decides which specialists may see it. Specialists with access add notes, and the second part of the system shows how the child's indicators change over time. The system records observations. It does not diagnose.
+Diploma project, Software Engineering, group SE-2410, Astana IT University.
+Task tracking: [YouTrack, project DIP](https://child-monitoring.youtrack.cloud). Repository: [felfir-bit/child-monitor](https://github.com/felfir-bit/child-monitor).
 
-## Problem Statement
+## What the system will do
 
-Observations of a young child are kept in scattered places such as notebooks, phone photos and messages, and parents and specialists who work with the same child rarely share one record. It is hard to compare what a child could do months ago with what they can do now, and a parent has no simple way to decide which specialist sees what. Existing tools either screen the child with questionnaires of moderate accuracy or let a parent keep a private log, and none of the systems we reviewed combines a parent-controlled record with specialist contributions.
+For each child aged 0 to 5 the system keeps one dated record of **growth measurements** (weight, length or height with the measuring method, head circumference), **milestone answers** (`yes`, `not_yet`, `not_sure`) and **specialist notes**. Measurements are compared with the WHO Child Growth Standards (z-scores and percentiles for 0 to 60 months, corrected age for children born before 37 weeks until 24 months). Milestone answers follow the CDC 2022 evidence-informed checklists and the WHO windows for six gross motor milestones. When a value or an answer is outside the reference, the system shows a signal (G1, G2, M1, W1) that suggests a conversation with a specialist; **the system never diagnoses**. Reminders follow the Kazakhstan preventive examination ages, and notifications are shown in the app. The full model is in [document 00](docs/00-monitoring-model.md).
 
-## Target Users
+## Problem
 
-- Parents of children aged 0 to 5, who create child profiles, grant and revoke specialist access, and read specialist notes.
-- Specialists (teachers, educators, psychologists) who see only the children granted to them and write notes about those children.
+Between polyclinic visits, families have no structured record of their child's growth and development. Measurements stay in the clinic system or in a notebook, and a speech therapist, a psychologist or a kindergarten teacher keeps separate notes. Values are hard to compare with a reference or over months, and a parent has no simple way to decide which specialist sees what. The existing tools we compared (document 04) screen the child, keep a private parent log or hold the clinic record, but none combines a parent-controlled record with reference-based monitoring and specialist notes. The problem statement rests on documentary evidence and on four needs interviews (three parents, one pediatrician) logged in document 02.
 
-## Expected Outcomes
+## Users
 
-- A backend with a documented REST API and an automated test suite.
-- Parent-controlled access to a child's record, with per-child grants for specialists.
-- Observation history and dynamics of development indicators.
-- A clickable prototype of the main screens.
-- An evaluation report covering access correctness and usability on synthetic data.
+- **Parents** of children aged 0 to 5: create child profiles, record measurements and milestone answers, grant and revoke per-child access for a specialist by email, read specialist notes.
+- **Specialists** (pediatric nurse or pediatrician, speech therapist, psychologist, kindergarten teacher): see only the children granted to them, record observations and write notes.
+
+There is no administrator role.
 
 ## Team
 
 | Member | Area | Responsibilities |
 | --- | --- | --- |
-| Zhan Erkebulan | Backend | Authentication and roles, child profiles, access control, specialist notes, API documentation, containerization and monitoring; project management |
-| Tassimov Arsen | Indicators and analytics | Development indicators, observation history, dynamics analytics, notifications; testing and integration of these modules |
+| Zhan Erkebulan (Жан Еркебулан) | Profiles, access and operations | Authentication and roles, child profiles, access control, specialist notes, API documentation, containerization and monitoring; project management |
+| Tasimov Arsen Malekovich (Тасимов Арсен Малекович) | Indicators and analytics | Growth and development indicators, observation history, dynamics analytics, visualization, notifications |
 
-**Supervisor:** Zhuldyz Basheyeva, Astana IT University.
+**Supervisor:** Zhuldyz Basheyeva (Башеева Жулдыз), Astana IT University.
 
-Group SE-2410, Astana IT University.
+## Planned technologies
 
-## Scope and Status
+Go with Fiber v2, PostgreSQL 16, REST with OpenAPI 3.0.3, JWT (HS256, one-hour lifetime) and Argon2id password hashing (passwords of 15 to 128 characters), a React progressive web app, Docker Compose with Prometheus and Grafana. In a real deployment the data is stored in Kazakhstan (Law No. 94-V). The choices are compared in document 05 and recorded in `docs/adr/`.
 
-**Included:** registration and login for parents and specialists; child profiles with the 0 to 5 age rule; per-child access grants with revocation; specialist notes with author-only changes; indicators, observation history, analytics and notifications (second student, planned).
+## Status at pre-defense 1 (24 October 2026)
 
-**Excluded:** diagnosis and risk scoring, native mobile apps, integration with clinics or government systems, real children's data.
+**Delivered (documentation only):** monitoring model, proposal, evidence of relevance (documentary findings and four interviews), literature review, comparison of existing systems, technology comparison with seven ADRs, requirements, architecture with eight diagrams, clickable prototype of scenarios SC1 to SC6, verification plan, project plan and risks, pre-defense preparation.
 
-**Status (pre-defense 1, 24 October 2026):** analysis and design documents, diagrams and the prototype are drafted.
+**Open:**
+
+- Four needs interviews are logged (3 parents, 1 specialist; document 02). More specialists (speech therapist, teacher) would strengthen A3.
+- No supervisor feedback is recorded yet (document 11).
+- Mockups for scenarios SC7 to SC10 (growth chart, checklist, signals, reminders) are planned.
+- `src/`, `tests/` and `config/` contain only `.gitkeep`. Implementation starts at milestone M2 (document 10).
+
+## How to review
+
+1. Read the documents in order; the index is [docs/README.md](docs/README.md).
+2. Diagrams: PlantUML sources in [diagrams/src/](diagrams/src/), SVG and PNG exports in [diagrams/rendered/](diagrams/rendered/), description in [diagrams/README.md](diagrams/README.md).
+3. Prototype: open [prototype/index.html](prototype/index.html) in a browser. Demo accounts: `parent@example.com` (parent) and `specialist@example.com` (specialist); the password is not checked. Details in [prototype/README.md](prototype/README.md).
+
+## Repository structure
+
+```
+.gitignore
+README.md
+config/            empty until M2 (Prometheus and Grafana configuration)
+diagrams/
+  README.md
+  src/             8 PlantUML sources
+  rendered/        SVG and PNG exports
+docs/
+  README.md        index of documents and identifiers
+  00-monitoring-model.md ... 12-pre-defense-preparation.md
+  adr/             ADR-001 to ADR-007
+  evidence/        interview guide and interview notes
+prototype/         clickable static mockup (HTML, CSS, JS)
+src/               empty until M2 (Go service)
+tests/             empty until M2
+```
+
+## Working rules
+
+Each student commits from their own GitHub account (Zhan: `felfir-bit`, Arsen: `k1ays`). Every change belongs to a YouTrack task: the branch is named `DIP-<n>-<slug>`, the commit message starts with `DIP-<n>:`, and the change reaches `main` only through a pull request reviewed by the other student. Secrets are never committed. Submission tags (`pre-defense-1`, `pre-defense-2`, `final-pre-defense`) are never moved. Details are in [document 10](docs/10-project-management-risks.md).
 
 Full project proposal: [docs/01-project-proposal.md](docs/01-project-proposal.md)
