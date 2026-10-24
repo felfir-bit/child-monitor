@@ -6,6 +6,8 @@ Demonstrate that the system achieves its aim (document 01): monitoring of growth
 
 ## 9.2 Test levels
 
+All tools, paths and test names in this table are planned. At pre-defense 1 no code exists; the tests are written at milestones M2 and M3.
+
 | Level | What it covers | Tool or method | Where |
 |---|---|---|---|
 | Unit | Age and corrected age, validation, password hashing, token issue and validation, configuration, reference catalog, message texts | `go test` | `src/internal/**/_test.go` |
@@ -88,7 +90,7 @@ The 403 and 404 rules follow document 06, section 6.1. If the implementation ret
 - **Latency runs (M6):** 20 concurrent virtual users, 60 seconds, mixed read and write requests, repeated three times; the reported value is the median of the three 95th percentiles.
 - **Usability sessions (M3, M4, M5):** five participants, one session each, 30 minutes. Each participant completes the tasks on the prototype or the implemented client. Timing starts when the task is read aloud and stops when the participant states that the note has been found or the task is abandoned.
 - **Baseline (M3):** each participant also finds a note in their own usual method (notes app, paper notebook or messages), using the same dataset content written into that method. The baseline is the current practice, not an existing product.
-- **Baseline (M8):** WHO's own implementation (R package `anthro`, document 03, R4). The tables are WHO's files from `github.com/WorldHealthOrganization/anthro` (`data-raw/growthstandards`, package version 1.1.0.9000). `tests/reference/generate_who_fixture.py` ports the `anthro_zscores` algorithm and writes 300 cases with a fixed seed (both sexes, 16 fixed boundary ages including 0, 730, 731 and 1826 days, the rest random; weights from 0.6 to 1.6 of the median so that values beyond ±3 SD are included). `tests/reference/verify_with_who_anthro.R` runs the same cases through the R package; it must be run on a machine with R and its output attached to the report.
+- **Baseline (M8):** WHO’s own implementation (R package anthro, document 03, R4), with WHO’s table files from github.com/WorldHealthOrganization/anthro (data-raw/growthstandards). At M3 a script tests/reference/generate_who_fixture.py will port the anthro_zscores algorithm and write at least 200 cases with a fixed seed (both sexes, fixed boundary ages including 0, 730, 731 and 1826 days, values beyond ±3 SD). A script tests/reference/verify_with_who_anthro.R will run the same cases through the R package on a machine with R, and its output will be attached to the report.
 - **Growth and milestone data:** synthetic children with invented measurements chosen to fall inside, near and outside the ±2 SD lines, and invented checklist answers; no real data.
 - **Ethics:** participants are adults, consent is verbal and recorded in the report without names. Recordings are not kept.
 
@@ -110,27 +112,13 @@ The evaluation report in the final submission contains: the test commands and th
 
 ## 9.8 Acceptance for the first pre-defense (24 October)
 
-Required at the first pre-defense:
+Required at the first pre-defense (documentation milestone, no code):
 
-- the unit, service, integration and HTTP tests run and pass;
-- the OpenAPI spec exists, is valid and Swagger UI loads (M2 in its first form);
-- the test plan (this document) and the scenario files exist.
+this test plan with the authorization matrix (9.3), the metrics (9.4) and the measurement conditions (9.5);
+the requirements with acceptance criteria that the tests will check (document 06).
+
+The OpenAPI spec, the scenario files and all tests are deliverables of M2 and M3.
 
 ## 9.9 Results on 22 October 2026
 
-Environment: Go 1.24.7, PostgreSQL 16.15, Linux; API built from `src/` and run against an empty database.
-
-| Check | Result |
-|---|---|
-| `gofmt -l .` and `go vet ./...` | No output, no findings |
-| `go test -race ./...` | All packages pass |
-| Service flows on PostgreSQL (`TEST_DATABASE_URL`) | 30 scenarios, 50 test cases with subtests, all pass |
-| End-to-end script (`tests/e2e/run_scenarios.sh`) | 87 of 87 checks pass, including the scenario of document 00, section 0.8 |
-| M1 authorization matrix | 34 of 34 rows covered by service flows, HTTP tests and the e2e script; all as expected |
-| M2 contract | OpenAPI 3.0.3 valid (`kin-openapi` v0.128.0), 28 paths; every server route documented (test) |
-| M7 coverage | `internal/service` 85.6%; `anthro` 84.9%; `httpapi` 77.8%; `reference` 72.5%; `domain` 70.2% |
-| M8 z-score accuracy | 300 of 300 cases within 0.01 of the ported `anthro` algorithm for all six indicators; the run through the R package itself is pending (no R in the build environment) |
-| M9 signal correctness | All boundary cases in the service flows pass |
-| Migrations | Empty database: `001_init` and `002_monitoring` applied; database with the old schema: only `002_monitoring` applied |
-
-Not yet measured: the usability study (M3, M4, M5, M10) and the latency runs (M6), planned for the final pre-defense when the client exists; the Docker stack (FR-OPS-02, FR-OPS-03) on a machine with Docker.
+No tests have been run at pre-defense 1, because no code exists yet. Results will be reported at M2 (metrics M1, M2, M7), M3 (M8, M9) and M5 (M3 to M6, M10), under the conditions in 9.5.
