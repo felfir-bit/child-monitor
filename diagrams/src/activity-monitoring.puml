@@ -1,5 +1,5 @@
 @startuml activity-monitoring
-title Activity: monitoring cycle for one child (as implemented)
+title Activity: monitoring cycle for one child (design)
 
 skinparam defaultFontName Arial
 skinparam shadowing false
