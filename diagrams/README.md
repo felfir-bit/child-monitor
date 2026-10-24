@@ -2,7 +2,7 @@
 
 Editable PlantUML sources are in `src/`. Rendered exports (SVG and PNG) are in `rendered/`, with the same base names. All diagrams follow the monitoring model in `docs/00-monitoring-model.md` and the architecture in `docs/07-architecture.md`.
 
-All names (packages, services, tables, endpoints) are taken from the code in `src/` as of 22 October 2026.
+The diagrams show the target design. No code exists yet (`src/` is empty until milestone M2); package, service, table and endpoint names are the planned names from document 07.
 
 ## Required by the checklist
 
@@ -17,12 +17,12 @@ All names (packages, services, tables, endpoints) are taken from the code in `sr
 
 | File | What it shows |
 |---|---|
-| `data-model.puml` | The ten tables created by migrations 001 and 002 with keys, constraints and cascades, and the embedded reference files |
+| `data-model.puml` | The ten planned tables (migrations 001 and 002, milestones M2 and M3) with keys, constraints and cascades, and the embedded reference files |
 | `sequence-measurement.puml` | `POST .../measurements`: authentication, access check, 400 and 422 validation, z-scores by `anthro`, signal evaluation (G1, G2, resolution), notifications, response |
 | `sequence-access.puml` | A parent grants access, the specialist reads the child and writes a note, the parent revokes access, and access ends at the next request |
-| `activity-monitoring.puml` | The monitoring cycle for one child as implemented: corrected age, measurement and checklist branches, evaluation of G1, G2, M1 and W1, resolution, notifications and the hourly reminder job |
+| `activity-monitoring.puml` | The planned monitoring cycle for one child: corrected age, measurement and checklist branches, evaluation of G1, G2, M1 and W1, resolution, notifications and the hourly reminder job |
 
-Elements marked `planned` (dashed outline, grey fill) are not built yet: only the web client and the reverse proxy. Reference elements (green) are published standards embedded as data.
+Elements marked `planned` (dashed outline, grey fill) are the web client and the reverse proxy, which come after the server; all other elements are planned as well, for milestones M2 and M3. Reference elements (green) are published standards embedded as data.
 
 ## Rendering
 
